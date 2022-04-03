@@ -139,22 +139,23 @@ def print_sudoku(sudoku: array):
                 line_str += '  '
         print(line_str)
 
-# UGLY two arguments not used, why??
-def check_for_block(number: int, possible_positions: array, sudoku: array) -> array:
-    blocking_line_candidate = possible_positions[0][0]
-    blocking_row_candidate = possible_positions[0][1]
-    possible_positions_local = deepcopy(possible_positions)
+def positions_are_in_line(positions: array) -> bool:
+    possible_positions_local = deepcopy(positions)
+
+    line_candidate = possible_positions_local[0][0]
+    row_candidate = possible_positions_local[0][1]
     del(possible_positions_local[0])
     for position in possible_positions_local:
-        if blocking_line_candidate or blocking_row_candidate:
-            if not blocking_line_candidate == position[0]:
-                blocking_line_candidate = None
-            if not blocking_row_candidate == position[1]:
-                blocking_row_candidate = None
-        else:
-            # no blocking_candidate left. This number in this combination doesnt block
-            return False
-    return True 
+        if line_candidate or row_candidate:
+            if not line_candidate == position[0]:
+                line_candidate = None
+            if not row_candidate == position[1]:
+                row_candidate = None
+    
+    if line_candidate or row_candidate:
+        return True
+    else:
+        return False 
 
 def block_line_or_row(number: int, blocking_positions: array, sudoku: array) -> None:
     for position in blocking_positions:
@@ -213,7 +214,7 @@ def work_sudoku(sudoku: array) -> None:
                     sudoku[line][row][0] = number
                     erase_possible_positions_of_number(number, quadrant_index, sudoku)
                 elif len(possible_positions) > 1:
-                    block_possible = check_for_block(number, possible_positions, sudoku)
+                    block_possible = positions_are_in_line(possible_positions)
                     if block_possible:
                         block_line_or_row(number, possible_positions, sudoku)
                 else:

@@ -2,6 +2,7 @@ from array import array
 from copy import deepcopy
 from turtle import position
 
+# TODO move sudoku access methods to its own class for better overview
 def __position_is_already_taken(line: int, row: int, sudoku_or_quadrant: array) -> bool:
     if sudoku_or_quadrant[line][row][0] == None:
         return False
@@ -228,36 +229,80 @@ def work_sudoku(sudoku: array) -> None:
                 # number is already in quadrant
                 pass
 
-def get_input() -> str:
+def get_sudoku_input() -> array:
 
     # TODO get sudoku from user input
 
-    # return [
-    #     [None, None, 6, 5, None, 7, 4, None, None],
-    #     [None, 8, None, 9, None, 3, None, 6, None],
-    #     [3, None, None, None, None, None, None, None, 5],
-    #     [7, 6, None, None, 4, None, None, 8, 2],
-    #     [None, None, None, 6, None, 8, None, None, None],
-    #     [8, 5, None, None, 9, None, None, 1, 3],
-    #     [5, None, None, None, None, None, None, None, 8],
-    #     [None, 1, None, 2, None, 9, None, 7, None],
-    #     [None, None, 7, 8, None, 4, 1, None, None]
-    # ]
-    return [
-        [3, None, None, 8, None, None, 4, 1, None],
-        [None, None, None, 2, 3, None, None, None, 5],
-        [None, None, 8, None, None, 1, None, None, 3],
-        [6, None, 4, None, None, None, 2, None, None],
-        [1, None, 9, 6, None, None, None, 5, None],
-        [None, None, None, None, 8, None, None, 3, 6],
-        [8, None, None, None, 2, 7, 3, None, None],
-        [None, 9, None, None, None, None, None, 6, None],
-        [7, None, 1, None, 6, 9, None, 4, 8]
-    ]
+    prepared_sudokus: dict = {
+        4: [
+            [
+                [None, None, 6, 5, None, 7, 4, None, None],
+                [None, 8, None, 9, None, 3, None, 6, None],
+                [3, None, None, None, None, None, None, None, 5],
+                [7, 6, None, None, 4, None, None, 8, 2],
+                [None, None, None, 6, None, 8, None, None, None],
+                [8, 5, None, None, 9, None, None, 1, 3],
+                [5, None, None, None, None, None, None, None, 8],
+                [None, 1, None, 2, None, 9, None, 7, None],
+                [None, None, 7, 8, None, 4, 1, None, None]
+            ]
+        ],
+        6: [
+            [
+                [3, None, None, 8, None, None, 4, 1, None],
+                [None, None, None, 2, 3, None, None, None, 5],
+                [None, None, 8, None, None, 1, None, None, 3],
+                [6, None, 4, None, None, None, 2, None, None],
+                [1, None, 9, 6, None, None, None, 5, None],
+                [None, None, None, None, 8, None, None, 3, 6],
+                [8, None, None, None, 2, 7, 3, None, None],
+                [None, 9, None, None, None, None, None, 6, None],
+                [7, None, 1, None, 6, 9, None, 4, 8]
+            ]
+        ]
+    }
+
+    print('manual input (m) or prepared sudoku(p)?')
+    decision_mp_str = input()
+    if decision_mp_str == 'm':
+        new_sudoku: array = [] 
+        line_count = range(0, 9)
+        for line in line_count:
+            input_str = input()
+            new_line: array = []
+            for character in input_str:
+                try:
+                    input_int = int(character)
+                except:
+                    if character == ' ' or '0':
+                        input_int = None
+                    else:
+                        print('wrong symbol, try again (only 1-9 and space or 0)')
+                        line_count.step(1)
+                        break
+                new_line.append(input_int)
+            if len(new_line) == 9:
+                new_sudoku.append(new_line)
+        return new_sudoku
+    elif decision_mp_str == 'p':
+        print('difficulty [4-7] and random (r) or specific(0-1)')
+        decision_dri_str = input()
+        difficulty: int = int(decision_dri_str[0])
+        decision_random_str = decision_dri_str[1]
+        if decision_random_str == 'r':
+            # TODO implement
+            pass
+        else:
+            id: int = int(decision_dri_str[1])
+            return prepared_sudokus[difficulty][id]
+    else:
+        print('that didnt work')
+        return None
+
 
 def main():
 
-    sudoku_input = get_input()
+    sudoku_input = get_sudoku_input()
 
     for line in range(9):
         for row in range(9):

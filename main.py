@@ -232,8 +232,6 @@ def work_sudoku(sudoku: array) -> None:
 
 def get_sudoku_input() -> array:
 
-    # TODO get sudoku from user input
-
     prepared_sudokus: dict = {
         4: [
             [
@@ -286,7 +284,7 @@ def get_sudoku_input() -> array:
                 new_sudoku.append(new_line)
         return new_sudoku
     elif decision_mp_str == 'p':
-        print('difficulty [4-7] and random (r) or specific(0-1)')
+        print('difficulty [4/6] and random (r) or specific(0-1)')
         decision_dri_str = input()
         difficulty: int = int(decision_dri_str[0])
         decision_random_str = decision_dri_str[1]

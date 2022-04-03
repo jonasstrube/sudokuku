@@ -1,5 +1,6 @@
 from array import array
 from copy import deepcopy
+from random import randint
 from turtle import position
 
 # TODO move sudoku access methods to its own class for better overview
@@ -290,8 +291,9 @@ def get_sudoku_input() -> array:
         difficulty: int = int(decision_dri_str[0])
         decision_random_str = decision_dri_str[1]
         if decision_random_str == 'r':
-            # TODO implement
-            pass
+            sudokus_from_chosen_difficulty = prepared_sudokus[difficulty]
+            index: int = randint(0, len(sudokus_from_chosen_difficulty) - 1)
+            return sudokus_from_chosen_difficulty[index]
         else:
             id: int = int(decision_dri_str[1])
             return prepared_sudokus[difficulty][id]

@@ -191,6 +191,9 @@ def get_possible_positions_of_number(number: int, quadrant_index: int, sudoku_to
     
     return possible_positions
 
+def erase_possible_positions_at_position(line: int, row: int, sudoku: array) -> None:
+    sudoku[line][row][1] = []
+
 def erase_possible_positions_of_number(number: int, quadrant_index: int, sudoku: array) -> None:
     quadrant_position_list = __get_positions_inside_of_quadrant(quadrant_index, sudoku)
     
@@ -212,6 +215,7 @@ def work_sudoku(sudoku: array) -> None:
                     line = possible_positions[0][0]
                     row = possible_positions[0][1]
                     sudoku[line][row][0] = number
+                    erase_possible_positions_at_position(line, row, sudoku)
                     erase_possible_positions_of_number(number, quadrant_index, sudoku)
                 elif len(possible_positions) > 1:
                     block_possible = positions_are_in_line(possible_positions)

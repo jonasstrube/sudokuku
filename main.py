@@ -80,19 +80,19 @@ def __number_fits_in_position(number: int, line: int, row: int, sudoku_to_work_o
     else:
         return True
 
-def __get_positions_inside_of_quadrant(quadrant_index: int, sudoku: array) -> array:
-    quadrant_positions: array = []
+def __get_coordinates_in_quadrant(quadrant_index: int) -> array:
+    quadrant_coordinates: array = []
 
     upper_line = quadrant_index - (quadrant_index % 3)
     left_row = (quadrant_index % 3) * 3
-    upper_left_position = [upper_line, left_row]
+    upper_left_coordinate = [upper_line, left_row]
 
     for current_line in range(0, 3):
         for current_row in range(0, 3):
-            position_line = upper_left_position[0] + current_line
-            position_row = upper_left_position[1] + current_row
-            quadrant_positions.append([position_line, position_row])
-    return quadrant_positions
+            coordinate_line = upper_left_coordinate[0] + current_line
+            coordinate_row = upper_left_coordinate[1] + current_row
+            quadrant_coordinates.append([coordinate_line, coordinate_row])
+    return quadrant_coordinates
 
 def print_sudoku(sudoku: array):
     for line in sudoku:
@@ -104,17 +104,17 @@ def print_sudoku(sudoku: array):
                 line_str += '  '
         print(line_str)
 
-def positions_are_in_line(positions: array) -> bool:
-    possible_positions_local = deepcopy(positions)
+def coordinates_are_in_line(coordinates: array) -> bool:
+    possible_coordinates_local = deepcopy(coordinates)
 
-    line_candidate = possible_positions_local[0][0]
-    row_candidate = possible_positions_local[0][1]
-    del(possible_positions_local[0])
-    for position in possible_positions_local:
+    line_candidate = possible_coordinates_local[0][0]
+    row_candidate = possible_coordinates_local[0][1]
+    del(possible_coordinates_local[0])
+    for coordinate in possible_coordinates_local:
         if line_candidate or row_candidate:
-            if not line_candidate == position[0]:
+            if not line_candidate == coordinate[0]:
                 line_candidate = None
-            if not row_candidate == position[1]:
+            if not row_candidate == coordinate[1]:
                 row_candidate = None
     
     if line_candidate or row_candidate:
@@ -140,8 +140,8 @@ def number_is_already_in_quadrant(number: int, quadrant_index: int, sudoku_to_wo
                 return True
     return False
 
-def get_possible_positions_of_number(number: int, quadrant_index: int, sudoku_to_work_on: array) -> array:
-    possible_positions: array = []
+def get_possible_coordinates_of_number(number: int, quadrant_index: int, sudoku_to_work_on: array) -> array:
+    possible_coordinates: array = []
     for line_quadrantrelative in range(0, 3):
         line = line_quadrantrelative + quadrant_index - (quadrant_index % 3)
         for row_quadrantrelative in range(0, 3):
@@ -149,18 +149,18 @@ def get_possible_positions_of_number(number: int, quadrant_index: int, sudoku_to
             if __sudokumanager.position_is_already_taken(line, row, sudoku_to_work_on):
                 pass
             elif __number_fits_in_position(number, line, row, sudoku_to_work_on):
-                possible_positions.append([line, row])
+                possible_coordinates.append([line, row])
             else:
                 # number does not fit the position
                 pass
     
-    return possible_positions
+    return possible_coordinates
 
 def erase_possible_positions_at_position(line: int, row: int, sudoku: array) -> None:
     sudoku[line][row][1] = []
 
 def erase_possible_positions_of_number(number: int, quadrant_index: int, sudoku: array) -> None:
-    quadrant_position_list = __get_positions_inside_of_quadrant(quadrant_index, sudoku)
+    quadrant_position_list = __get_coordinates_in_quadrant(quadrant_index)
     
     for quadrant_position in quadrant_position_list:
         possible_positions = sudoku[quadrant_position[0]][quadrant_position[1]][1]
@@ -174,20 +174,20 @@ def work_sudoku(sudoku: array) -> None:
         for quadrant_index in range(9): # 9 quadrants, 0 to 8 
             if not number_is_already_in_quadrant(number, quadrant_index, sudoku):
                 # fill in number if it only has one possible position 
-                possible_positions = get_possible_positions_of_number(number, quadrant_index, sudoku)
+                possible_coordinates = get_possible_coordinates_of_number(number, quadrant_index, sudoku)
                 
-                if len(possible_positions) == 1:
-                    line = possible_positions[0][0]
-                    row = possible_positions[0][1]
+                if len(possible_coordinates) == 1:
+                    line = possible_coordinates[0][0]
+                    row = possible_coordinates[0][1]
                     sudoku[line][row][0] = number
                     erase_possible_positions_at_position(line, row, sudoku)
                     erase_possible_positions_of_number(number, quadrant_index, sudoku)
-                elif len(possible_positions) > 1:
-                    block_possible = positions_are_in_line(possible_positions)
+                elif len(possible_coordinates) > 1:
+                    block_possible = coordinates_are_in_line(possible_coordinates)
                     if block_possible:
-                        block_line_or_row(number, possible_positions, sudoku)
+                        block_line_or_row(number, possible_coordinates, sudoku)
                 else:
-                    # Exception: there is no possible position in the given quadrant for the number
+                    # Exception: there is no possible coordinate in the given quadrant for the number
                     raise Exception
             else:
                 # number is already in quadrant

@@ -1,7 +1,6 @@
 from array import array
 from copy import deepcopy
 from random import randint
-from turtle import position
 
 # TODO move sudoku access methods to its own class for better overview
 def __position_is_already_taken(line: int, row: int, sudoku_or_quadrant: array) -> bool:

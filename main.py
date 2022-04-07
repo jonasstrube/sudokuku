@@ -4,18 +4,6 @@ from random import randint
 import __sudokumanager 
 
 # TODO move sudoku access methods to its own class for better overview
-def __get_quadrant_index_of_position(line: int, row: int) -> int:
-    quadrant_line = int(line / 3)
-    quadrant_row = int(row / 3)
-    quadrant_index = quadrant_row + (quadrant_line * 3)
-    return quadrant_index
-
-def __position_is_in_quadrant(line: int, row: int, quadrant_index_of_position: int) -> bool:
-    quadrant_index = __get_quadrant_index_of_position(line, row)
-    if quadrant_index == quadrant_index_of_position:
-        return True
-    else:
-        return False
 
 def __position_has_blocking_number(number: int, line: int, row: int, sudoku_to_work_on: array) -> bool:
     blocking_number_list: array = sudoku_to_work_on[line][row][1]
@@ -53,21 +41,21 @@ def __quadrantrow_is_blocked_by_blocking_numbers(number: int, row_quadrantrelati
     return False
 
 def __blocking_numbers_in_line_or_row(number: int, line: int, row: int, sudoku_to_work_on: array) -> bool:
-    quadrant_index_of_position: int = __get_quadrant_index_of_position(line, row)
+    quadrant_index_of_position: int = __sudokumanager.get_quadrant_index_of_position(line, row)
     line_quadrantrelative = line % 3
     row_quadrantrelative = row % 3
     for current_row in range(0, 9):
-        if not __position_is_in_quadrant(line, current_row, quadrant_index_of_position) and sudoku_to_work_on[line][current_row][0] == None:
+        if not __sudokumanager.position_is_in_quadrant(line, current_row, quadrant_index_of_position) and sudoku_to_work_on[line][current_row][0] == None:
             if __position_has_blocking_number(number, line, current_row, sudoku_to_work_on):
-                current_quadrant_index = __get_quadrant_index_of_position(line, current_row)
+                current_quadrant_index = __sudokumanager.get_quadrant_index_of_position(line, current_row)
                 current_quadrant = __sudokumanager.get_quadrant(current_quadrant_index, sudoku_to_work_on)
                 if __quadrantline_is_blocked_by_blocking_numbers(number, line_quadrantrelative, current_quadrant):
                     return True
 
     for current_line in range(0, 9):
-        if not __position_is_in_quadrant(current_line, row, quadrant_index_of_position) and sudoku_to_work_on[current_line][row][0] == None:
+        if not __sudokumanager.position_is_in_quadrant(current_line, row, quadrant_index_of_position) and sudoku_to_work_on[current_line][row][0] == None:
             if __position_has_blocking_number(number, current_line, row, sudoku_to_work_on):
-                current_quadrant_index = __get_quadrant_index_of_position(current_line, row)
+                current_quadrant_index = __sudokumanager.get_quadrant_index_of_position(current_line, row)
                 current_quadrant = __sudokumanager.get_quadrant(current_quadrant_index, sudoku_to_work_on)
                 if __quadrantrow_is_blocked_by_blocking_numbers(number, row_quadrantrelative, current_quadrant):
                     return True

@@ -29,3 +29,16 @@ def position_is_already_taken(line: int, row: int, sudoku_or_quadrant: array) ->
             return False
         else:
             return True
+
+def get_quadrant_index_of_position(line: int, row: int) -> int:
+    quadrant_line = int(line / 3)
+    quadrant_row = int(row / 3)
+    quadrant_index = quadrant_row + (quadrant_line * 3)
+    return quadrant_index
+
+def position_is_in_quadrant(line: int, row: int, quadrant_index_of_position: int) -> bool:
+    quadrant_index = get_quadrant_index_of_position(line, row)
+    if quadrant_index == quadrant_index_of_position:
+        return True
+    else:
+        return False

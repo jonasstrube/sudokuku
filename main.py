@@ -1,6 +1,7 @@
 from array import array
 from copy import deepcopy
 from random import randint
+from sudokumanager import SudokuManager
 
 # TODO move sudoku access methods to its own class for better overview
 def __position_is_already_taken(line: int, row: int, sudoku_or_quadrant: array) -> bool:
@@ -324,6 +325,7 @@ def main():
     print_sudoku(sudoku_to_work_on)
     print()
     print("Iterations: " + str(iterations))
+    print (SudokuManager.hello())
 
 if __name__== '__main__':
     main()

@@ -63,3 +63,13 @@ def position_has_blocking_number(number: int, line: int, row: int, sudoku_to_wor
         if blocking_number == number:
             return True
     return False
+
+def erase_possible_positions_of_number(number: int, quadrant_index: int, sudoku: array) -> None:
+    quadrant_position_list = get_coordinates_in_quadrant(quadrant_index)
+    
+    for quadrant_position in quadrant_position_list:
+        possible_positions = sudoku[quadrant_position[0]][quadrant_position[1]][1]
+        for index in range(len(possible_positions)):
+            if possible_positions[index] == number:
+                del(possible_positions[index])
+                break

@@ -138,16 +138,6 @@ def get_possible_coordinates_of_number(number: int, quadrant_index: int, sudoku_
 def erase_possible_positions_at_position(line: int, row: int, sudoku: array) -> None:
     sudoku[line][row][1] = []
 
-def erase_possible_positions_of_number(number: int, quadrant_index: int, sudoku: array) -> None:
-    quadrant_position_list = __sudokumanager.get_coordinates_in_quadrant(quadrant_index)
-    
-    for quadrant_position in quadrant_position_list:
-        possible_positions = sudoku[quadrant_position[0]][quadrant_position[1]][1]
-        for index in range(len(possible_positions)):
-            if possible_positions[index] == number:
-                del(possible_positions[index])
-                break
-
 def work_sudoku(sudoku: array) -> None:
     for number in range(1, 10): # 1 to 9
         for quadrant_index in range(9): # 9 quadrants, 0 to 8 
@@ -160,7 +150,7 @@ def work_sudoku(sudoku: array) -> None:
                     row = possible_coordinates[0][1]
                     sudoku[line][row][0] = number
                     erase_possible_positions_at_position(line, row, sudoku)
-                    erase_possible_positions_of_number(number, quadrant_index, sudoku)
+                    __sudokumanager.erase_possible_positions_of_number(number, quadrant_index, sudoku)
                 elif len(possible_coordinates) > 1:
                     block_possible = coordinates_are_in_line(possible_coordinates)
                     if block_possible:

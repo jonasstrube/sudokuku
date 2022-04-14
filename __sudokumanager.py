@@ -42,3 +42,10 @@ def position_is_in_quadrant(line: int, row: int, quadrant_index_of_position: int
         return True
     else:
         return False
+
+def position_has_blocking_number(number: int, line: int, row: int, sudoku_to_work_on: array) -> bool:
+    blocking_number_list: array = sudoku_to_work_on[line][row][1]
+    for blocking_number in blocking_number_list:
+        if blocking_number == number:
+            return True
+    return False

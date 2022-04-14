@@ -53,7 +53,7 @@ def erase_possible_numbers_at_position(line: int, row: int, sudoku: array) -> No
     sudoku[line][row][1] = []
 
 # -----------------------------------------------
-# QUADRANTS - ACCESS AND HELPER FUNCTIONS
+# QUADRANTS POSITIONS - ACCESS AND HELPER FUNCTIONS
 # -----------------------------------------------
 
 def get_quadrant(quadrant_index: int, sudoku_to_work_on: array) -> array:
@@ -101,3 +101,38 @@ def get_coordinates_in_quadrant(quadrant_index: int) -> array:
             coordinate_row = upper_left_coordinate[1] + current_row
             quadrant_coordinates.append([coordinate_line, coordinate_row])
     return quadrant_coordinates
+
+# -----------------------------------------------
+# QUADRANTS POSSIBLE POSITIONS OF NUMBERS - ACCESS
+# -----------------------------------------------
+
+def quadrantline_is_blocked_by_blocking_numbers(number: int, line_quadrantrelative: int, current_quadrant: array) -> bool:
+    possible_positions = []
+    for line in range(0, 3):
+        for row in range(0, 3):
+            if not position_is_already_taken(line, row, current_quadrant):
+                possible_numbers_list = current_quadrant[line][row][1]
+                for possible_number in possible_numbers_list:
+                    if possible_number == number:
+                        possible_positions.append([line, row])
+
+    if len(possible_positions) == 0:
+        return False
+    for position in possible_positions:
+        if not line_quadrantrelative == position[0]:
+            return False
+    return True
+
+def quadrantrow_is_blocked_by_blocking_numbers(number: int, row_quadrantrelative: int, current_quadrant: array) -> bool:
+    possible_positions = []
+    for line in range(0, 3):
+        for row in range(0, 3):
+            if not position_is_already_taken(line, row, current_quadrant):
+                possible_numbers_list = current_quadrant[line][row][1]
+                for possible_number in possible_numbers_list:
+                    if possible_number == number:
+                        possible_positions.append([line, row])
+
+    # TODO implement True condition (see function above)
+    return False
+

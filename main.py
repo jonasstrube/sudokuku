@@ -5,34 +5,6 @@ import __sudokumanager
 
 # TODO move sudoku access methods to its own class for better overview
 
-def __quadrantline_is_blocked_by_blocking_numbers(number: int, line_quadrantrelative: int, current_quadrant: array) -> bool:
-    possible_positions = []
-    for line in range(0, 3):
-        for row in range(0, 3):
-            if not __sudokumanager.position_is_already_taken(line, row, current_quadrant):
-                possible_numbers_list = current_quadrant[line][row][1]
-                for possible_number in possible_numbers_list:
-                    if possible_number == number:
-                        possible_positions.append([line, row])
-
-    if len(possible_positions) == 0:
-        return False
-    for position in possible_positions:
-        if not line_quadrantrelative == position[0]:
-            return False
-    return True
-
-def __quadrantrow_is_blocked_by_blocking_numbers(number: int, row_quadrantrelative: int, current_quadrant: array) -> bool:
-    possible_positions = []
-    for line in range(0, 3):
-        for row in range(0, 3):
-            if not __sudokumanager.position_is_already_taken(line, row, current_quadrant):
-                possible_numbers_list = current_quadrant[line][row][1]
-                for possible_number in possible_numbers_list:
-                    if possible_number == number:
-                        possible_positions.append([line, row])
-    return False
-
 def __blocking_numbers_in_line_or_row(number: int, line: int, row: int, sudoku_to_work_on: array) -> bool:
     quadrant_index_of_position: int = __sudokumanager.get_quadrant_index_of_position(line, row)
     line_quadrantrelative = line % 3
@@ -42,7 +14,7 @@ def __blocking_numbers_in_line_or_row(number: int, line: int, row: int, sudoku_t
             if __sudokumanager.number_is_possible_on_position(number, line, current_row, sudoku_to_work_on):
                 current_quadrant_index = __sudokumanager.get_quadrant_index_of_position(line, current_row)
                 current_quadrant = __sudokumanager.get_quadrant(current_quadrant_index, sudoku_to_work_on)
-                if __quadrantline_is_blocked_by_blocking_numbers(number, line_quadrantrelative, current_quadrant):
+                if __sudokumanager.quadrantline_is_blocked_by_blocking_numbers(number, line_quadrantrelative, current_quadrant):
                     return True
 
     for current_line in range(0, 9):
@@ -50,7 +22,7 @@ def __blocking_numbers_in_line_or_row(number: int, line: int, row: int, sudoku_t
             if __sudokumanager.number_is_possible_on_position(number, current_line, row, sudoku_to_work_on):
                 current_quadrant_index = __sudokumanager.get_quadrant_index_of_position(current_line, row)
                 current_quadrant = __sudokumanager.get_quadrant(current_quadrant_index, sudoku_to_work_on)
-                if __quadrantrow_is_blocked_by_blocking_numbers(number, row_quadrantrelative, current_quadrant):
+                if __sudokumanager.quadrantrow_is_blocked_by_blocking_numbers(number, row_quadrantrelative, current_quadrant):
                     return True
     
     return False

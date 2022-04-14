@@ -73,3 +73,6 @@ def erase_possible_positions_of_number(number: int, quadrant_index: int, sudoku:
             if possible_positions[index] == number:
                 del(possible_positions[index])
                 break
+
+def erase_possible_numbers_at_position(line: int, row: int, sudoku: array) -> None:
+    sudoku[line][row][1] = []

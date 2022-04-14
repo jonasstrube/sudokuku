@@ -55,19 +55,8 @@ def __blocking_numbers_in_line_or_row(number: int, line: int, row: int, sudoku_t
     
     return False
 
-def __same_number_in_line_or_row(number: int, line: int, row: int, sudoku_to_work_on: array) -> bool:
-    for current_row in range(0, 9):
-        if sudoku_to_work_on[line][current_row][0] == number:
-            return True
-    
-    for current_line in range(0, 9):
-        if sudoku_to_work_on[current_line][row][0] == number:
-            return True
-    
-    return False
-
 def __number_fits_in_position(number: int, line: int, row: int, sudoku_to_work_on: array) -> bool:
-    if (    __same_number_in_line_or_row(number, line, row, sudoku_to_work_on) 
+    if (    __sudokumanager.same_number_in_line_or_row(number, line, row, sudoku_to_work_on) 
         or __blocking_numbers_in_line_or_row(number, line, row, sudoku_to_work_on)):
         return False
     else:

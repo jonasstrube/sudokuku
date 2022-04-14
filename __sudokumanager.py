@@ -15,6 +15,19 @@ def position_is_already_taken(line: int, row: int, sudoku_or_quadrant: array) ->
         else:
             return True
 
+def same_number_in_line_or_row(number: int, line: int, row: int, sudoku_to_work_on: array) -> bool:
+    for current_row in range(0, 9):
+        # UGLY dezentralized sudoku access
+        if sudoku_to_work_on[line][current_row][0] == number:
+            return True
+    
+    for current_line in range(0, 9):
+        # UGLY dezentralized sudoku access
+        if sudoku_to_work_on[current_line][row][0] == number:
+            return True
+    
+    return False
+
 # -----------------------------------------------
 # SUDOKU POSSIBLE POSITIONS OF NUMBERS - ACCESS AND MANIPULATION
 # -----------------------------------------------

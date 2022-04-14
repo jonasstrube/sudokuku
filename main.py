@@ -73,20 +73,6 @@ def __number_fits_in_position(number: int, line: int, row: int, sudoku_to_work_o
     else:
         return True
 
-def __get_coordinates_in_quadrant(quadrant_index: int) -> array:
-    quadrant_coordinates: array = []
-
-    upper_line = quadrant_index - (quadrant_index % 3)
-    left_row = (quadrant_index % 3) * 3
-    upper_left_coordinate = [upper_line, left_row]
-
-    for current_line in range(0, 3):
-        for current_row in range(0, 3):
-            coordinate_line = upper_left_coordinate[0] + current_line
-            coordinate_row = upper_left_coordinate[1] + current_row
-            quadrant_coordinates.append([coordinate_line, coordinate_row])
-    return quadrant_coordinates
-
 def print_sudoku(sudoku: array):
     for line in sudoku:
         line_str: str = ''
@@ -153,7 +139,7 @@ def erase_possible_positions_at_position(line: int, row: int, sudoku: array) -> 
     sudoku[line][row][1] = []
 
 def erase_possible_positions_of_number(number: int, quadrant_index: int, sudoku: array) -> None:
-    quadrant_position_list = __get_coordinates_in_quadrant(quadrant_index)
+    quadrant_position_list = __sudokumanager.get_coordinates_in_quadrant(quadrant_index)
     
     for quadrant_position in quadrant_position_list:
         possible_positions = sudoku[quadrant_position[0]][quadrant_position[1]][1]
@@ -254,7 +240,6 @@ def get_sudoku_input() -> array:
     else:
         print('that didnt work')
         return None
-
 
 def main():
 

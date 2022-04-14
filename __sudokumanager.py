@@ -6,7 +6,7 @@ def hello():
     return 'hello'
 
 # -----------------------------------------------
-# SUDOKU POSITIONS - ACCESS AND MANIPULATION
+# SUDOKU POSITIONS - ACCESS
 # -----------------------------------------------
 
 def position_is_already_taken(line: int, row: int, sudoku_or_quadrant: array) -> bool:
@@ -14,6 +14,10 @@ def position_is_already_taken(line: int, row: int, sudoku_or_quadrant: array) ->
             return False
         else:
             return True
+
+# -----------------------------------------------
+# SUDOKU POSSIBLE POSITIONS OF NUMBERS - ACCESS AND MANIPULATION
+# -----------------------------------------------
 
 def number_is_possible_on_position(number: int, line: int, row: int, sudoku_to_work_on: array) -> bool:
     blocking_number_list: array = sudoku_to_work_on[line][row][1]

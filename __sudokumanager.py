@@ -110,6 +110,15 @@ def position_is_in_quadrant(line: int, row: int, quadrant_index_of_position: int
     else:
         return False
 
+def number_is_in_quadrant(number: int, quadrant_index: int, sudoku_to_work_on: array) -> bool:
+    quadrant = get_quadrant(quadrant_index, sudoku_to_work_on)
+
+    for line in quadrant:
+        for field in line:
+            if field[0] == number:
+                return True
+    return False
+
 def get_coordinates_in_quadrant(quadrant_index: int) -> array:
     quadrant_coordinates: array = []
 

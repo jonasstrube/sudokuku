@@ -49,15 +49,6 @@ def block_line_or_row(number: int, blocking_positions: array, sudoku: array) -> 
     for position in blocking_positions:
         sudoku[position[0]][position[1]][1].append(number)
 
-def number_is_already_in_quadrant(number: int, quadrant_index: int, sudoku_to_work_on: array) -> bool:
-    quadrant = __sudokumanager.get_quadrant(quadrant_index, sudoku_to_work_on)
-
-    for line in quadrant:
-        for field in line:
-            if field[0] == number:
-                return True
-    return False
-
 def get_possible_coordinates_of_number(number: int, quadrant_index: int, sudoku_to_work_on: array) -> array:
     possible_coordinates: array = []
     for line_quadrantrelative in range(0, 3):
@@ -77,7 +68,7 @@ def get_possible_coordinates_of_number(number: int, quadrant_index: int, sudoku_
 def work_sudoku(sudoku: array) -> None:
     for number in range(1, 10): # 1 to 9
         for quadrant_index in range(9): # 9 quadrants, 0 to 8 
-            if not number_is_already_in_quadrant(number, quadrant_index, sudoku):
+            if not __sudokumanager.number_is_in_quadrant(number, quadrant_index, sudoku):
                 # fill in number if it only has one possible position 
                 possible_coordinates = get_possible_coordinates_of_number(number, quadrant_index, sudoku)
                 

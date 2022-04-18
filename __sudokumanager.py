@@ -203,3 +203,18 @@ def quadrantrow_is_blocked_by_blocking_numbers(number: int, row_quadrantrelative
     # TODO implement True condition (see function above)
     return False
 
+def get_possible_coordinates_of_number(number: int, quadrant_index: int, sudoku_to_work_on: array) -> array:
+    possible_coordinates: array = []
+    for line_quadrantrelative in range(0, 3):
+        line = line_quadrantrelative + quadrant_index - (quadrant_index % 3)
+        for row_quadrantrelative in range(0, 3):
+            row = row_quadrantrelative + (quadrant_index % 3) * 3
+            if position_is_already_taken(line, row, sudoku_to_work_on):
+                pass
+            elif number_fits_in_position(number, line, row, sudoku_to_work_on):
+                possible_coordinates.append([line, row])
+            else:
+                # number does not fit the position
+                pass
+    
+    return possible_coordinates

@@ -15,28 +15,12 @@ def print_sudoku(sudoku: array):
                 line_str += '  '
         print(line_str)
 
-def get_possible_coordinates_of_number(number: int, quadrant_index: int, sudoku_to_work_on: array) -> array:
-    possible_coordinates: array = []
-    for line_quadrantrelative in range(0, 3):
-        line = line_quadrantrelative + quadrant_index - (quadrant_index % 3)
-        for row_quadrantrelative in range(0, 3):
-            row = row_quadrantrelative + (quadrant_index % 3) * 3
-            if __sudokumanager.position_is_already_taken(line, row, sudoku_to_work_on):
-                pass
-            elif __sudokumanager.number_fits_in_position(number, line, row, sudoku_to_work_on):
-                possible_coordinates.append([line, row])
-            else:
-                # number does not fit the position
-                pass
-    
-    return possible_coordinates
-
 def work_sudoku(sudoku: array) -> None:
     for number in range(1, 10): # 1 to 9
         for quadrant_index in range(9): # 9 quadrants, 0 to 8 
             if not __sudokumanager.number_is_in_quadrant(number, quadrant_index, sudoku):
                 # fill in number if it only has one possible position 
-                possible_coordinates = get_possible_coordinates_of_number(number, quadrant_index, sudoku)
+                possible_coordinates = __sudokumanager.get_possible_coordinates_of_number(number, quadrant_index, sudoku)
                 
                 if len(possible_coordinates) == 1:
                     line = possible_coordinates[0][0]

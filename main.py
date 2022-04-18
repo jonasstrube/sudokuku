@@ -3,8 +3,6 @@ from copy import deepcopy
 from random import randint
 import __sudokumanager 
 
-# TODO move sudoku access methods to its own class for better overview
-
 def print_sudoku(sudoku: array):
     for line in sudoku:
         line_str: str = ''
@@ -23,6 +21,7 @@ def work_sudoku(sudoku: array) -> None:
                 possible_coordinates = __sudokumanager.get_possible_coordinates_of_number(number, quadrant_index, sudoku)
                 
                 if len(possible_coordinates) == 1:
+                    # TODO add sudokumanager-function to set number in sudoku / UGLY decentralized access of sudoku
                     line = possible_coordinates[0][0]
                     row = possible_coordinates[0][1]
                     sudoku[line][row][0] = number

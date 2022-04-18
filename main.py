@@ -15,15 +15,6 @@ def print_sudoku(sudoku: array):
                 line_str += '  '
         print(line_str)
 
-def block_line_or_row(number: int, blocking_positions: array, sudoku: array) -> None:
-    for position in blocking_positions:
-        blocking_numbers = sudoku[position[0]][position[1]][1]
-        for blocking_number in blocking_numbers:
-            if number == blocking_number:
-                return None
-    for position in blocking_positions:
-        sudoku[position[0]][position[1]][1].append(number)
-
 def get_possible_coordinates_of_number(number: int, quadrant_index: int, sudoku_to_work_on: array) -> array:
     possible_coordinates: array = []
     for line_quadrantrelative in range(0, 3):
@@ -56,7 +47,7 @@ def work_sudoku(sudoku: array) -> None:
                 elif len(possible_coordinates) > 1:
                     block_possible = __sudokumanager.coordinates_are_in_line(possible_coordinates)
                     if block_possible:
-                        block_line_or_row(number, possible_coordinates, sudoku)
+                        __sudokumanager.block_line_or_row(number, possible_coordinates, sudoku)
                 else:
                     # Exception: there is no possible coordinate in the given quadrant for the number
                     raise Exception

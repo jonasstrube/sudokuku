@@ -99,6 +99,17 @@ def erase_possible_positions_of_number(number: int, quadrant_index: int, sudoku:
 def erase_possible_numbers_at_position(line: int, row: int, sudoku: array) -> None:
     sudoku[line][row][1] = []
 
+def block_line_or_row(number: int, blocking_positions: array, sudoku: array) -> None:
+    for position in blocking_positions:
+        # UGLY decentralized access of blocking numbers
+        blocking_numbers = sudoku[position[0]][position[1]][1]
+        for blocking_number in blocking_numbers:
+            if number == blocking_number:
+                return None
+    for position in blocking_positions:
+        # UGLY decentralized access of blocking numbers
+        sudoku[position[0]][position[1]][1].append(number)
+
 # -----------------------------------------------
 # QUADRANTS POSITIONS - ACCESS AND HELPER FUNCTIONS
 # -----------------------------------------------

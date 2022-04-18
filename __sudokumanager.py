@@ -61,6 +61,13 @@ def number_is_possible_on_position(number: int, line: int, row: int, sudoku_to_w
             return True
     return False
 
+def number_fits_in_position(number: int, line: int, row: int, sudoku_to_work_on: array) -> bool:
+    if (    same_number_in_line_or_row(number, line, row, sudoku_to_work_on) 
+        or blocking_numbers_in_line_or_row(number, line, row, sudoku_to_work_on)):
+        return False
+    else:
+        return True
+
 def erase_possible_positions_of_number(number: int, quadrant_index: int, sudoku: array) -> None:
     quadrant_position_list = get_coordinates_in_quadrant(quadrant_index)
     

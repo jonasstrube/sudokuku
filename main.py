@@ -15,24 +15,6 @@ def print_sudoku(sudoku: array):
                 line_str += '  '
         print(line_str)
 
-def coordinates_are_in_line(coordinates: array) -> bool:
-    possible_coordinates_local = deepcopy(coordinates)
-
-    line_candidate = possible_coordinates_local[0][0]
-    row_candidate = possible_coordinates_local[0][1]
-    del(possible_coordinates_local[0])
-    for coordinate in possible_coordinates_local:
-        if line_candidate or row_candidate:
-            if not line_candidate == coordinate[0]:
-                line_candidate = None
-            if not row_candidate == coordinate[1]:
-                row_candidate = None
-    
-    if line_candidate or row_candidate:
-        return True
-    else:
-        return False 
-
 def block_line_or_row(number: int, blocking_positions: array, sudoku: array) -> None:
     for position in blocking_positions:
         blocking_numbers = sudoku[position[0]][position[1]][1]
@@ -72,7 +54,7 @@ def work_sudoku(sudoku: array) -> None:
                     __sudokumanager.erase_possible_numbers_at_position(line, row, sudoku)
                     __sudokumanager.erase_possible_positions_of_number(number, quadrant_index, sudoku)
                 elif len(possible_coordinates) > 1:
-                    block_possible = coordinates_are_in_line(possible_coordinates)
+                    block_possible = __sudokumanager.coordinates_are_in_line(possible_coordinates)
                     if block_possible:
                         block_line_or_row(number, possible_coordinates, sudoku)
                 else:

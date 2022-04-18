@@ -6,7 +6,7 @@ def hello():
     return 'hello'
 
 # -----------------------------------------------
-# SUDOKU POSITIONS - ACCESS
+# SUDOKU POSITIONS - ACCESS AND HELPER FUNCTIONS
 # -----------------------------------------------
 
 def position_is_already_taken(line: int, row: int, sudoku_or_quadrant: array) -> bool:
@@ -27,6 +27,24 @@ def same_number_in_line_or_row(number: int, line: int, row: int, sudoku_to_work_
             return True
     
     return False
+
+def coordinates_are_in_line(coordinates: array) -> bool:
+    possible_coordinates_local = deepcopy(coordinates)
+
+    line_candidate = possible_coordinates_local[0][0]
+    row_candidate = possible_coordinates_local[0][1]
+    del(possible_coordinates_local[0])
+    for coordinate in possible_coordinates_local:
+        if line_candidate or row_candidate:
+            if not line_candidate == coordinate[0]:
+                line_candidate = None
+            if not row_candidate == coordinate[1]:
+                row_candidate = None
+    
+    if line_candidate or row_candidate:
+        return True
+    else:
+        return False 
 
 # -----------------------------------------------
 # SUDOKU POSSIBLE POSITIONS OF NUMBERS - ACCESS AND MANIPULATION

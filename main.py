@@ -105,7 +105,6 @@ def main():
     print_sudoku(sudoku_solved.sudoku)
     print()
     print("Iterations: " + str(sudoku_solved.iterations))
-    print (__sudokumanager.hello())
 
 if __name__== '__main__':
     main()

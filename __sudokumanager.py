@@ -4,8 +4,6 @@ from copy import deepcopy
 from sudokuwrapped import sudokuwrapped
 
 
-def hello():
-    return 'hello'
 
 def solve_sudoku(sudoku: array) -> sudokuwrapped:
     sudoku_to_work_on = deepcopy(sudoku)

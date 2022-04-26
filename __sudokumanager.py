@@ -46,6 +46,13 @@ def iterate_sudoku(sudoku: array) -> None:
                 # number is already in quadrant
                 pass
 
+def prepare_sudoku(sudoku_raw: array) -> array:
+    sudoku = deepcopy(sudoku_raw)
+    for line in range(9):
+        for row in range(9):
+            sudoku[line][row] = [sudoku[line][row], []]
+    return sudoku
+
 # -----------------------------------------------
 # SUDOKU POSITIONS - ACCESS AND HELPER FUNCTIONS
 # -----------------------------------------------

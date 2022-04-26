@@ -1,7 +1,7 @@
 from array import array
 from copy import deepcopy
 from random import randint
-import __sudokumanager
+import sudokumanager
 from sudokuwrapped import sudokuwrapped 
 
 def get_sudoku_input() -> array:
@@ -76,7 +76,7 @@ def get_sudoku_input() -> array:
         print('that didnt work')
         return None
     
-    chosen_prepared_sudoku = __sudokumanager.prepare_sudoku(chosen_raw_sudoku)
+    chosen_prepared_sudoku = sudokumanager.prepare_sudoku(chosen_raw_sudoku)
     
     return chosen_prepared_sudoku
 
@@ -99,7 +99,7 @@ def main():
     print_sudoku(sudoku_input)
     print()
 
-    sudoku_solved: sudokuwrapped = __sudokumanager.solve_sudoku(sudoku_input)
+    sudoku_solved: sudokuwrapped = sudokumanager.solve_sudoku(sudoku_input)
 
     print('End:')
     print_sudoku(sudoku_solved.sudoku)

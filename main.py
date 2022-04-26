@@ -72,31 +72,6 @@ def get_sudoku_input() -> array:
         print('that didnt work')
         return None
 
-def work_sudoku(sudoku: array) -> None:
-    for number in range(1, 10): # 1 to 9
-        for quadrant_index in range(9): # 9 quadrants, 0 to 8 
-            if not __sudokumanager.number_is_in_quadrant(number, quadrant_index, sudoku):
-                # fill in number if it only has one possible position 
-                possible_coordinates = __sudokumanager.get_possible_coordinates_of_number(number, quadrant_index, sudoku)
-                
-                if len(possible_coordinates) == 1:
-                    # TODO add sudokumanager-function to set number in sudoku / UGLY decentralized access of sudoku
-                    line = possible_coordinates[0][0]
-                    row = possible_coordinates[0][1]
-                    sudoku[line][row][0] = number
-                    __sudokumanager.erase_possible_numbers_at_position(line, row, sudoku)
-                    __sudokumanager.erase_possible_positions_of_number(number, quadrant_index, sudoku)
-                elif len(possible_coordinates) > 1:
-                    block_possible = __sudokumanager.coordinates_are_in_line(possible_coordinates)
-                    if block_possible:
-                        __sudokumanager.block_line_or_row(number, possible_coordinates, sudoku)
-                else:
-                    # Exception: there is no possible coordinate in the given quadrant for the number
-                    raise Exception
-            else:
-                # number is already in quadrant
-                pass
-
 def print_sudoku(sudoku: array):
     for line in sudoku:
         line_str: str = ''
@@ -111,6 +86,8 @@ def main():
 
     sudoku_input = get_sudoku_input()
 
+    # UGLY editing of sudoku in highlevel function
+    # TODO move to get_sudoku_input() or move to new function in sudokumanager, that gets executed by get_sudoku_input()
     for line in range(9):
         for row in range(9):
             sudoku_input[line][row] = [sudoku_input[line][row], []]
@@ -126,7 +103,7 @@ def main():
         iterations += 1
         sudoku_last_state = deepcopy(sudoku_to_work_on)
 
-        work_sudoku(sudoku_to_work_on)
+        __sudokumanager.work_sudoku(sudoku_to_work_on)
 
     print('End:')    
     print_sudoku(sudoku_to_work_on)

@@ -5,6 +5,31 @@ from copy import deepcopy
 def hello():
     return 'hello'
 
+def work_sudoku(sudoku: array) -> None:
+    for number in range(1, 10): # 1 to 9
+        for quadrant_index in range(9): # 9 quadrants, 0 to 8 
+            if not number_is_in_quadrant(number, quadrant_index, sudoku):
+                # fill in number if it only has one possible position 
+                possible_coordinates = get_possible_coordinates_of_number(number, quadrant_index, sudoku)
+                
+                if len(possible_coordinates) == 1:
+                    # TODO add sudokumanager-function to set number in sudoku / UGLY decentralized access of sudoku
+                    line = possible_coordinates[0][0]
+                    row = possible_coordinates[0][1]
+                    sudoku[line][row][0] = number
+                    erase_possible_numbers_at_position(line, row, sudoku)
+                    erase_possible_positions_of_number(number, quadrant_index, sudoku)
+                elif len(possible_coordinates) > 1:
+                    block_possible = coordinates_are_in_line(possible_coordinates)
+                    if block_possible:
+                        block_line_or_row(number, possible_coordinates, sudoku)
+                else:
+                    # Exception: there is no possible coordinate in the given quadrant for the number
+                    raise Exception
+            else:
+                # number is already in quadrant
+                pass
+
 # -----------------------------------------------
 # SUDOKU POSITIONS - ACCESS AND HELPER FUNCTIONS
 # -----------------------------------------------

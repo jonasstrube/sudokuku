@@ -103,7 +103,7 @@ def main():
         iterations += 1
         sudoku_last_state = deepcopy(sudoku_to_work_on)
 
-        __sudokumanager.work_sudoku(sudoku_to_work_on)
+        __sudokumanager.iterate_sudoku(sudoku_to_work_on)
 
     print('End:')    
     print_sudoku(sudoku_to_work_on)

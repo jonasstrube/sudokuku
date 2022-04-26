@@ -5,7 +5,7 @@ from copy import deepcopy
 def hello():
     return 'hello'
 
-def work_sudoku(sudoku: array) -> None:
+def iterate_sudoku(sudoku: array) -> None:
     for number in range(1, 10): # 1 to 9
         for quadrant_index in range(9): # 9 quadrants, 0 to 8 
             if not number_is_in_quadrant(number, quadrant_index, sudoku):

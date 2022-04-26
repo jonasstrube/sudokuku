@@ -1,6 +1,9 @@
 from array import array
 from copy import deepcopy
 from random import randint
+import sys
+
+sys.path.append("src")
 import sudokumanager
 from sudokuwrapped import sudokuwrapped 
 

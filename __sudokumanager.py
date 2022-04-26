@@ -1,11 +1,13 @@
 from array import array
 from copy import deepcopy
 
+from sudokuwrapped import sudokuwrapped
+
 
 def hello():
     return 'hello'
 
-def solve_sudoku(sudoku: array) -> array:
+def solve_sudoku(sudoku: array) -> sudokuwrapped:
     sudoku_to_work_on = deepcopy(sudoku)
     sudoku_last_state = None
     iterations = 0
@@ -15,7 +17,9 @@ def solve_sudoku(sudoku: array) -> array:
 
         # TODO dont modify sudoku-object, but return the new iterated state and use it as a variable here
         iterate_sudoku(sudoku_to_work_on)
-    return sudoku_to_work_on
+    
+    sudoku_wrapped = sudokuwrapped(sudoku_to_work_on, iterations)
+    return sudoku_wrapped
 
 def iterate_sudoku(sudoku: array) -> None:
     for number in range(1, 10): # 1 to 9

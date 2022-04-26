@@ -1,7 +1,8 @@
 from array import array
 from copy import deepcopy
 from random import randint
-import __sudokumanager 
+import __sudokumanager
+from sudokuwrapped import sudokuwrapped 
 
 def get_sudoku_input() -> array:
 
@@ -97,12 +98,12 @@ def main():
     print_sudoku(sudoku_input)
     print()
 
-    sudoku_solved = __sudokumanager.solve_sudoku(sudoku_input)
+    sudoku_solved: sudokuwrapped = __sudokumanager.solve_sudoku(sudoku_input)
 
     print('End:')
-    print_sudoku(sudoku_solved)
+    print_sudoku(sudoku_solved.sudoku)
     print()
-    # print("Iterations: " + str(iterations))
+    print("Iterations: " + str(sudoku_solved.iterations))
     print (__sudokumanager.hello())
 
 if __name__== '__main__':

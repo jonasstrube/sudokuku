@@ -37,6 +37,9 @@ def get_sudoku_input() -> array:
 
     print('manual input (m) or prepared sudoku(p)?')
     decision_mp_str = input()
+
+    chosen_sudoku: array = None
+
     if decision_mp_str == 'm':
         new_sudoku: array = [] 
         line_count = range(0, 9)
@@ -56,7 +59,7 @@ def get_sudoku_input() -> array:
                 new_line.append(input_int)
             if len(new_line) == 9:
                 new_sudoku.append(new_line)
-        return new_sudoku
+        chosen_sudoku = new_sudoku
     elif decision_mp_str == 'p':
         print('difficulty [4/6] and random (r) or specific(0-1)')
         decision_dri_str = input()
@@ -68,10 +71,19 @@ def get_sudoku_input() -> array:
             return sudokus_from_chosen_difficulty[index]
         else:
             id: int = int(decision_dri_str[1])
-            return prepared_sudokus[difficulty][id]
+            chosen_sudoku = prepared_sudokus[difficulty][id]
     else:
         print('that didnt work')
         return None
+    
+    # UGLY editing of sudoku in highlevel function
+    # TODO move to new function in sudokumanager, that gets executed by get_sudoku_input()
+    
+    for line in range(9):
+        for row in range(9):
+            chosen_sudoku[line][row] = [chosen_sudoku[line][row], []]
+    
+    return chosen_sudoku
 
 def print_sudoku(sudoku: array):
     for line in sudoku:
@@ -86,12 +98,6 @@ def print_sudoku(sudoku: array):
 def main():
 
     sudoku_input = get_sudoku_input()
-
-    # UGLY editing of sudoku in highlevel function
-    # TODO move to get_sudoku_input() or move to new function in sudokumanager, that gets executed by get_sudoku_input()
-    for line in range(9):
-        for row in range(9):
-            sudoku_input[line][row] = [sudoku_input[line][row], []]
 
     print()
     print('Start:')

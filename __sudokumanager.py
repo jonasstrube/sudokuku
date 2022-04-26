@@ -27,7 +27,7 @@ def iterate_sudoku(sudoku: array) -> array:
                 possible_coordinates = get_possible_coordinates_of_number(number, quadrant_index, sudoku)
                 
                 if len(possible_coordinates) == 1:
-                    # TODO add sudokumanager-function to set number in sudoku / UGLY decentralized access of sudoku
+                    # UGLY decentralized access of sudoku
                     line = possible_coordinates[0][0]
                     row = possible_coordinates[0][1]
                     sudoku[line][row][0] = number
@@ -247,8 +247,13 @@ def quadrantrow_is_blocked_by_blocking_numbers(number: int, row_quadrantrelative
                     if possible_number == number:
                         possible_positions.append([line, row])
 
-    # TODO implement True condition (see function above)
-    return False
+    if len(possible_positions) == 0:
+        return False
+    pass
+    for position in possible_positions:
+        if not row_quadrantrelative == position[1]:
+            return False
+    return True
 
 def get_possible_coordinates_of_number(number: int, quadrant_index: int, sudoku_to_work_on: array) -> array:
     possible_coordinates: array = []

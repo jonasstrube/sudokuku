@@ -95,20 +95,14 @@ def main():
     print()
     print('Start:')
     print_sudoku(sudoku_input)
-
-    sudoku_to_work_on = deepcopy(sudoku_input)
-    sudoku_last_state = None
-    iterations = 0
-    while(not sudoku_last_state == sudoku_to_work_on): # while something is changing
-        iterations += 1
-        sudoku_last_state = deepcopy(sudoku_to_work_on)
-
-        __sudokumanager.iterate_sudoku(sudoku_to_work_on)
-
-    print('End:')    
-    print_sudoku(sudoku_to_work_on)
     print()
-    print("Iterations: " + str(iterations))
+
+    sudoku_solved = __sudokumanager.solve_sudoku(sudoku_input)
+
+    print('End:')
+    print_sudoku(sudoku_solved)
+    print()
+    # print("Iterations: " + str(iterations))
     print (__sudokumanager.hello())
 
 if __name__== '__main__':

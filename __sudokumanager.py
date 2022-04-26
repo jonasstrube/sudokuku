@@ -5,6 +5,18 @@ from copy import deepcopy
 def hello():
     return 'hello'
 
+def solve_sudoku(sudoku: array) -> array:
+    sudoku_to_work_on = deepcopy(sudoku)
+    sudoku_last_state = None
+    iterations = 0
+    while(not sudoku_last_state == sudoku_to_work_on): # while something is changing
+        iterations += 1
+        sudoku_last_state = deepcopy(sudoku_to_work_on)
+
+        # TODO dont modify sudoku-object, but return the new iterated state and use it as a variable here
+        iterate_sudoku(sudoku_to_work_on)
+    return sudoku_to_work_on
+
 def iterate_sudoku(sudoku: array) -> None:
     for number in range(1, 10): # 1 to 9
         for quadrant_index in range(9): # 9 quadrants, 0 to 8 

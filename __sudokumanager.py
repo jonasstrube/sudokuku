@@ -6,20 +6,20 @@ from sudokuwrapped import sudokuwrapped
 
 
 def solve_sudoku(sudoku: array) -> sudokuwrapped:
-    sudoku_to_work_on = deepcopy(sudoku)
-    sudoku_last_state = None
+    sudoku_input = deepcopy(sudoku)
+    sudoku_iterated: array = deepcopy(sudoku_input)
+    sudoku_old_state: array = None
     iterations = 0
-    while(not sudoku_last_state == sudoku_to_work_on): # while something is changing
+    while(not sudoku_iterated == sudoku_old_state): # while something is changing
+        sudoku_old_state = sudoku_iterated
+        sudoku_iterated: array = iterate_sudoku(sudoku_old_state)
         iterations += 1
-        sudoku_last_state = deepcopy(sudoku_to_work_on)
-
-        # TODO dont modify sudoku-object, but return the new iterated state and use it as a variable here
-        iterate_sudoku(sudoku_to_work_on)
     
-    sudoku_wrapped = sudokuwrapped(sudoku_to_work_on, iterations)
+    sudoku_wrapped = sudokuwrapped(sudoku_old_state, iterations)
     return sudoku_wrapped
 
-def iterate_sudoku(sudoku: array) -> None:
+def iterate_sudoku(sudoku: array) -> array:
+    sudoku: array = deepcopy(sudoku)
     for number in range(1, 10): # 1 to 9
         for quadrant_index in range(9): # 9 quadrants, 0 to 8 
             if not number_is_in_quadrant(number, quadrant_index, sudoku):
@@ -43,6 +43,7 @@ def iterate_sudoku(sudoku: array) -> None:
             else:
                 # number is already in quadrant
                 pass
+    return sudoku
 
 def prepare_sudoku(sudoku_raw: array) -> array:
     sudoku = deepcopy(sudoku_raw)

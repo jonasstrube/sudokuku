@@ -71,7 +71,7 @@ def get_sudoku_input() -> array:
         if decision_random_str == 'r':
             sudokus_from_chosen_difficulty = prepared_sudokus[difficulty]
             index: int = randint(0, len(sudokus_from_chosen_difficulty) - 1)
-            return sudokus_from_chosen_difficulty[index]
+            chosen_raw_sudoku = sudokus_from_chosen_difficulty[index]
         else:
             id: int = int(decision_dri_str[1])
             chosen_raw_sudoku = prepared_sudokus[difficulty][id]

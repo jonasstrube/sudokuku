@@ -1,4 +1,4 @@
-# Sudoku Manager
+# Sudokuku
 
 [![Python Version](https://img.shields.io/pypi/pyversions/sudokuku?style=flat-square)](https://pypi.org/project/sudokuku)
 [![License](https://img.shields.io/pypi/l/sudokuku?style=flat-square)](LICENSE)

@@ -4,7 +4,7 @@ from random import randint
 import sys
 
 sys.path.append("src")
-import sudokumanager
+import sudokuku
 from sudokuwrapped import sudokuwrapped 
 
 def get_sudoku_input() -> array:
@@ -79,7 +79,7 @@ def get_sudoku_input() -> array:
         print('that didnt work')
         return None
     
-    chosen_prepared_sudoku = sudokumanager.prepare_sudoku(chosen_raw_sudoku)
+    chosen_prepared_sudoku = sudokuku.prepare_sudoku(chosen_raw_sudoku)
     
     return chosen_prepared_sudoku
 
@@ -102,7 +102,7 @@ def main():
     print_sudoku(sudoku_input)
     print()
 
-    sudoku_solved: sudokuwrapped = sudokumanager.solve_sudoku(sudoku_input)
+    sudoku_solved: sudokuwrapped = sudokuku.solve_sudoku(sudoku_input)
 
     print('End:')
     print_sudoku(sudoku_solved.sudoku)

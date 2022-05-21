@@ -1,7 +1,7 @@
 # Sudokuku
 
 [![Python Version](https://img.shields.io/pypi/pyversions/sudokuku?style=flat-square)](https://pypi.org/project/sudokuku)
-[![License](https://img.shields.io/pypi/l/sudokuku?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/pypi/l/sudokuku?style=flat-square)](https://github.com/jonasstrube/sudokuku/blob/main/LICENSE)
 
 [![PyPI Package Version](https://shields.io/pypi/v/sudokuku?style=flat-square)](https://pypi.org/project/sudokuku)
 [![PyPI Downloads](https://img.shields.io/pypi/dm/sudokuku?style=flat-square)](https://pypi.org/project/sudokuku)

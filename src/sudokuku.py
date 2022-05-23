@@ -23,10 +23,10 @@ def iterate_sudoku(sudoku: array) -> array:
     for number in range(1, 10): # 1 to 9
         for quadrant_index in range(9): # 9 quadrants, 0 to 8 
             if not number_is_in_quadrant(number, quadrant_index, sudoku):
-                # fill in number if it only has one possible position 
-                possible_coordinates = get_possible_coordinates_of_number(number, quadrant_index, sudoku)
+                possible_coordinates = get_possible_coordinates_of_number(number, quadrant_index=quadrant_index, sudoku_to_work_on=sudoku)
                 
                 if len(possible_coordinates) == 1:
+                    # fill in number if it only has one possible position 
                     # UGLY decentralized access of sudoku
                     line = possible_coordinates[0][0]
                     row = possible_coordinates[0][1]
@@ -43,6 +43,51 @@ def iterate_sudoku(sudoku: array) -> array:
             else:
                 # number is already in quadrant
                 pass
+                
+        for line_index in range(9): # 0 to 8
+            if not number_is_in_line(number, line_index, sudoku):
+                # TODO implement search for coordinates in line in get_possible_coordinates_of_number
+                possible_coordinates = get_possible_coordinates_of_number(number, line_index=line_index, sudoku_to_work_on=sudoku)
+
+                if len(possible_coordinates) == 1:
+                    # UGLY decentralized access of sudoku
+                    line = possible_coordinates[0][0]
+                    row = possible_coordinates[0][1]
+                    sudoku[line][row][0] = number
+                # TODO implement blocking for lines
+                # elif len(possible_coordinates) > 1:
+                #     block_possible = coordinates_are_in_line(possible_coordinates)
+                #     if block_possible:
+                #         block_line_or_row(number, possible_coordinates, sudoku)
+                else:
+                    # Exception: there is no possible coordinate in the given line for the number
+                    raise Exception
+            else:
+                # number is already in line
+                pass
+        
+        for row_index in range(9): # 0 to 8
+            if not number_is_in_row(number, row_index, sudoku):
+                # TODO implement search for coordinates in row in get_possible_coordinates_of_number
+                possible_coordinates = get_possible_coordinates_of_number(number, row_index=row_index, sudoku_to_work_on=sudoku)
+
+                if len(possible_coordinates) == 1:
+                    # UGLY decentralized access of sudoku
+                    line = possible_coordinates[0][0]
+                    row = possible_coordinates[0][1]
+                    sudoku[line][row][0] = number
+                # TODO implement blocking for rows
+                # elif len(possible_coordinates) > 1:
+                #     block_possible = coordinates_are_in_line(possible_coordinates)
+                #     if block_possible:
+                #         block_line_or_row(number, possible_coordinates, sudoku)
+                else:
+                    # Exception: there is no possible coordinate in the given line for the number
+                    raise Exception
+            else:
+                # number is already in line
+                pass
+
     return sudoku
 
 def prepare_sudoku(sudoku_raw: array) -> array:
@@ -198,6 +243,7 @@ def number_is_in_quadrant(number: int, quadrant_index: int, sudoku_to_work_on: a
 
     for line in quadrant:
         for field in line:
+            # UGLY decentralized access of sudoku
             if field[0] == number:
                 return True
     return False

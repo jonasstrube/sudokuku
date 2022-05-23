@@ -3,6 +3,7 @@ from copy import deepcopy
 from random import randint
 import sys
 
+# UGLY make import elegant
 sys.path.append("src")
 import sudokuku
 from sudokuwrapped import sudokuwrapped 
@@ -23,7 +24,7 @@ def get_sudoku_input() -> array:
                 [None, None, 7, 8, None, 4, 1, None, None]
             ]
         ],
-        6: [
+        5: [
             [
                 [3, None, None, 8, None, None, 4, 1, None],
                 [None, None, None, 2, 3, None, None, None, 5],
@@ -33,6 +34,19 @@ def get_sudoku_input() -> array:
                 [None, None, None, None, 8, None, None, 3, 6],
                 [8, None, None, None, 2, 7, 3, None, None],
                 [None, 9, None, None, None, None, None, 6, None],
+                [7, None, 1, None, 6, 9, None, 4, 8]
+            ]
+        ],
+        6: [
+            [
+                [3, None, None, 8, None, None, 4, 1, None],
+                [None, None, None, 2, 3, None, None, None, 5],
+                [None, None, 8, None, None, 1, None, None, 3],
+                [6, None, 4, None, None, None, 2, None, None],
+                [1, None, 9, 6, None, None, None, 5, None],
+                [None, None, None, None, 8, None, None, 3, 6],
+                [8, None, None, None, 2, 7, 3, None, None],
+                [None, 9, None, None, None, None, None, None, None],
                 [7, None, 1, None, 6, 9, None, 4, 8]
             ]
         ]

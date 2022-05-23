@@ -97,29 +97,19 @@ def get_sudoku_input() -> array:
     
     return chosen_prepared_sudoku
 
-def print_sudoku(sudoku: array):
-    for line in sudoku:
-        line_str: str = ''
-        for box in line:
-            if box[0]:
-                line_str += str(box[0]) + ' '
-            else:
-                line_str += '  '
-        print(line_str)
-
 def main():
 
     sudoku_input = get_sudoku_input()
 
     print()
     print('Start:')
-    print_sudoku(sudoku_input)
+    sudokuku.print_sudoku(sudoku_input)
     print()
 
     sudoku_solved: sudokuwrapped = sudokuku.solve_sudoku(sudoku_input)
 
     print('End:')
-    print_sudoku(sudoku_solved.sudoku)
+    sudokuku.print_sudoku(sudoku_solved.sudoku)
     print()
     print("Iterations: " + str(sudoku_solved.iterations))
 

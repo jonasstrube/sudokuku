@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="sudokuku",
-    version="0.2.0",
+    version="0.2.1",
     author="Jonas Strube",
     description="A package for solving sudokus",
     long_description=long_description,

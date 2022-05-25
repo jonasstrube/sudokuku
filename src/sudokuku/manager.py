@@ -1,11 +1,11 @@
 from array import array
 from copy import deepcopy
 
-from sudokuwrapped import sudokuwrapped
+from sudokuku.sudokuwrapped import Sudokuwrapped
 
 
 
-def solve_sudoku(sudoku: array) -> sudokuwrapped:
+def solve_sudoku(sudoku: array) -> Sudokuwrapped:
     sudoku_input = deepcopy(sudoku)
     sudoku_iterated: array = deepcopy(sudoku_input)
     sudoku_old_state: array = None
@@ -15,7 +15,7 @@ def solve_sudoku(sudoku: array) -> sudokuwrapped:
         sudoku_iterated: array = iterate_sudoku(sudoku_old_state)
         iterations += 1
     
-    sudoku_wrapped = sudokuwrapped(sudoku_old_state, iterations)
+    sudoku_wrapped = Sudokuwrapped(sudoku_old_state, iterations)
     return sudoku_wrapped
 
 def iterate_sudoku(sudoku: array) -> array:

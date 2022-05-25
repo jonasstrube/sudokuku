@@ -1,12 +1,8 @@
 from array import array
-from copy import deepcopy
 from random import randint
-import sys
 
-# UGLY make import elegant
-sys.path.append("src")
-import sudokuku
-from sudokuwrapped import sudokuwrapped 
+from sudokuku import manager
+from sudokuku.sudokuwrapped import Sudokuwrapped 
 
 def get_sudoku_input() -> array:
 
@@ -93,7 +89,7 @@ def get_sudoku_input() -> array:
         print('that didnt work')
         return None
     
-    chosen_prepared_sudoku = sudokuku.prepare_sudoku(chosen_raw_sudoku)
+    chosen_prepared_sudoku = manager.prepare_sudoku(chosen_raw_sudoku)
     
     return chosen_prepared_sudoku
 
@@ -103,13 +99,13 @@ def main():
 
     print()
     print('Start:')
-    sudokuku.print_sudoku(sudoku_input)
+    manager.print_sudoku(sudoku_input)
     print()
 
-    sudoku_solved: sudokuwrapped = sudokuku.solve_sudoku(sudoku_input)
+    sudoku_solved: Sudokuwrapped = manager.solve_sudoku(sudoku_input)
 
     print('End:')
-    sudokuku.print_sudoku(sudoku_solved.sudoku)
+    manager.print_sudoku(sudoku_solved.sudoku)
     print()
     print("Iterations: " + str(sudoku_solved.iterations))
 

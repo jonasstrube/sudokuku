@@ -3,7 +3,8 @@ from copy import deepcopy
 
 from sudokuku.sudokuwrapped import Sudokuwrapped
 
-
+# TODO change data type of sudoku and quadrant from array to list
+# TODO change all other uses of array datatype to list datatype
 
 def solve_sudoku(sudoku: array) -> Sudokuwrapped:
     sudoku_input = deepcopy(sudoku)
@@ -118,7 +119,12 @@ def same_number_in_line_or_column(number: int, sudoku_to_work_on: array, line=No
     
     return False
 
-def coordinates_are_in_line(coordinates: array) -> bool:
+def coordinates_are_in_line(coordinates: list) -> bool:
+    if not isinstance(coordinates, list):
+        raise TypeError('\'' + str(type(coordinates)) + '\' object is not allowed as an argument, coordinates have to be of type \'list\'')
+    if len(coordinates) < 2:
+        raise ValueError('length of coordinates list is ' + str(len(coordinates)) + ', must be at least 2')
+
     possible_coordinates_local = deepcopy(coordinates)
 
     line_candidate = possible_coordinates_local[0][0]

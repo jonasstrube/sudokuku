@@ -158,9 +158,9 @@ def print_sudoku(sudoku: array):
         line_str: str = ''
         for number in line:
             if number:
-                line_str += str(number) + '. '
+                line_str += str(number) + ' '
             else:
-                line_str += '.  '
+                line_str += '  '
         print(line_str)
 
 # -----------------------------------------------

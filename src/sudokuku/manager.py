@@ -11,12 +11,13 @@ def solve_sudoku(sudoku: array) -> Sudokuwrapped:
     sudoku_iterated: array = deepcopy(sudoku_input)
     sudoku_old_state: array = None
     iterations = 0
-    while(not sudoku_iterated == sudoku_old_state): # while something is changing
+    while(not sudoku_iterated == sudoku_old_state): # as long as something is changing
         sudoku_old_state = sudoku_iterated
         sudoku_iterated: array = iterate_sudoku(sudoku_old_state)
         iterations += 1
     
-    sudoku_wrapped = Sudokuwrapped(sudoku_old_state, iterations)
+    sudoku_cleaned = clean_sudoku(sudoku_old_state)
+    sudoku_wrapped = Sudokuwrapped(sudoku_cleaned, iterations)
     return sudoku_wrapped
 
 def iterate_sudoku(sudoku: array) -> array:
@@ -91,8 +92,18 @@ def prepare_sudoku(sudoku_raw: array) -> array:
     sudoku = deepcopy(sudoku_raw)
     for line in range(9):
         for column in range(9):
+            # UGLY decentralized access of sudoku
             sudoku[line][column] = [sudoku[line][column], []]
     return sudoku
+
+def clean_sudoku(sudoku_analytic: array) -> array:
+    sudoku = deepcopy(sudoku_analytic)
+    for line in range(9):
+        for column in range(9):
+            # UGLY decentralized access of sudoku
+            sudoku[line][column] = sudoku[line][column][0]
+    return sudoku
+
 
 # -----------------------------------------------
 # SUDOKU POSITIONS - ACCESS AND HELPER FUNCTIONS
@@ -145,11 +156,11 @@ def coordinates_are_in_line(coordinates: list) -> bool:
 def print_sudoku(sudoku: array):
     for line in sudoku:
         line_str: str = ''
-        for box in line:
-            if box[0]:
-                line_str += str(box[0]) + ' '
+        for number in line:
+            if number:
+                line_str += str(number) + '. '
             else:
-                line_str += '  '
+                line_str += '.  '
         print(line_str)
 
 # -----------------------------------------------

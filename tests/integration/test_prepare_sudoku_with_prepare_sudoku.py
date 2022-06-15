@@ -1,5 +1,6 @@
 import pytest
 from sudokuku import manager
+from sudokuku.sudokuwrapped import Sudokuwrapped
 
 class TestPrepareSudokuWithPrepareSudoku():
     def test_level_4_sudoku(self):
@@ -27,8 +28,9 @@ class TestPrepareSudokuWithPrepareSudoku():
                     [2, 9, 7, 8, 3, 4, 1, 5, 6]
                 ]
         
-        prepared_sudoku = manager.prepare_sudoku(sudoku_unsolved)
-        sudoku_solved_calculated = manager.solve_sudoku(prepared_sudoku)
+        sudokuwrapped_calculated: Sudokuwrapped = manager.solve_sudoku(sudoku_unsolved)
+
+        sudoku_solved_calculated = sudokuwrapped_calculated.sudoku
 
         assert sudoku_solved_calculated == sudoku_solved_expected
 

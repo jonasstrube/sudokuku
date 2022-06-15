@@ -8,7 +8,7 @@ from sudokuku.sudokuwrapped import Sudokuwrapped
 
 def solve_sudoku(sudoku: array) -> Sudokuwrapped:
     sudoku_input = deepcopy(sudoku)
-    sudoku_iterated: array = deepcopy(sudoku_input)
+    sudoku_iterated: array = prepare_sudoku(sudoku_input)
     sudoku_old_state: array = None
     iterations = 0
     while(not sudoku_iterated == sudoku_old_state): # as long as something is changing

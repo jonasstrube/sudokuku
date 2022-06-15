@@ -51,7 +51,7 @@ def get_sudoku_input() -> array:
     print('manual input (m) or prepared sudoku(p)?')
     decision_mp_str = input()
 
-    chosen_raw_sudoku: array = None
+    chosen_sudoku: array = None
 
     if decision_mp_str == 'm':
         new_sudoku: array = [] 
@@ -72,7 +72,7 @@ def get_sudoku_input() -> array:
                 new_line.append(input_int)
             if len(new_line) == 9:
                 new_sudoku.append(new_line)
-        chosen_raw_sudoku = new_sudoku
+        chosen_sudoku = new_sudoku
     elif decision_mp_str == 'p':
         print('difficulty [4/6] and random (r) or specific(0-1)')
         decision_dri_str = input()
@@ -81,17 +81,15 @@ def get_sudoku_input() -> array:
         if decision_random_str == 'r':
             sudokus_from_chosen_difficulty = prepared_sudokus[difficulty]
             index: int = randint(0, len(sudokus_from_chosen_difficulty) - 1)
-            chosen_raw_sudoku = sudokus_from_chosen_difficulty[index]
+            chosen_sudoku = sudokus_from_chosen_difficulty[index]
         else:
             id: int = int(decision_dri_str[1])
-            chosen_raw_sudoku = prepared_sudokus[difficulty][id]
+            chosen_sudoku = prepared_sudokus[difficulty][id]
     else:
         print('that didnt work')
         return None
-    
-    chosen_prepared_sudoku = manager.prepare_sudoku(chosen_raw_sudoku)
-    
-    return chosen_prepared_sudoku
+            
+    return chosen_sudoku
 
 def main():
 

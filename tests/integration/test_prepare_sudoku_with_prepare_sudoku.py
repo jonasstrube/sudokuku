@@ -1,6 +1,6 @@
 import pytest
-from sudokuku import manager
-from sudokuku.sudokuwrapped import Sudokuwrapped
+from src.sudokuku import manager
+from src.sudokuku.sudokuwrapped import Sudokuwrapped
 
 class TestPrepareSudokuWithPrepareSudoku():
     def test_level_4_sudoku(self):

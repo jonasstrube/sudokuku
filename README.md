@@ -9,3 +9,19 @@
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/jonasstrube/sudokuku?style=flat-square)
 
 A package for solving sudokus
+
+Contributing
+============
+
+Contributions are always welcome.
+
+Testing
+-------
+
+You can run all tests via
+    
+    $ py -m pytest
+
+You can also look up code coverage, for example using [pytest-cov](https://pypi.org/project/pytest-cov/).
+
+    $ py -m pytest --cov src/sudokuku/

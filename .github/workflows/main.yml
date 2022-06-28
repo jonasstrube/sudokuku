@@ -1,0 +1,22 @@
+name: Test workflow
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Test sudokuku
+    defaults:
+      run:
+        working-directory: ./src/sudokuku
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    - name: Install requirements
+      run: pip install -r requirements.txt
+    - name: Run tests and collect coverage
+      run: pytest --cov src/sudokuku/
+    - name: Upload coverage reports to Codecov with GitHub Action
+      uses: codecov/codecov-action@v3

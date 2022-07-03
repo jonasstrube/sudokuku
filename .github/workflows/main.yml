@@ -17,6 +17,6 @@ jobs:
         python -W ignore -m pip install -U codecov pytest-cov
         python -W ignore -m pip install -r requirements-dev.txt
     - name: Run tests and collect coverage
-      run: python -m pytest --cov src/sudokuku/
+      run: python -m pytest --cov sudokuku/
     - name: Upload coverage reports to Codecov with GitHub Action
       uses: codecov/codecov-action@v3

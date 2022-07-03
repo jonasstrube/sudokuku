@@ -16,7 +16,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    package_dir={"": "src"},
-    packages=setuptools.find_packages(where="src"),
+    package_dir={"": "sudokuku"},
+    packages=setuptools.find_packages(where="sudokuku"),
     python_requires=">=3.9",
 )

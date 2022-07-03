@@ -1,5 +1,6 @@
 # Sudokuku
 
+
 [![Python Version](https://img.shields.io/pypi/pyversions/sudokuku?style=flat-square)](https://pypi.org/project/sudokuku)
 [![License](https://img.shields.io/pypi/l/sudokuku?style=flat-square)](https://github.com/jonasstrube/sudokuku/blob/main/LICENSE)
 
@@ -11,18 +12,16 @@
 
 A package for solving sudokus
 
-Contributing
-============
+## Contributing
 
 Contributions are always welcome.
 
-Testing
--------
+### Testing
 
 You can run all tests via
-    
-    $ py -m pytest
+
+    py -m pytest
 
 You can also look up code coverage, for example using [pytest-cov](https://pypi.org/project/pytest-cov/).
 
-    $ py -m pytest --cov src/sudokuku/
+    py -m pytest --cov src/sudokuku/

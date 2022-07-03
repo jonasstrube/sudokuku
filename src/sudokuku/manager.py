@@ -1,7 +1,7 @@
 from array import array
 from copy import deepcopy
 
-from src.sudokuku.sudokuwrapped import Sudokuwrapped
+from sudokuku.sudokuwrapped import Sudokuwrapped
 
 # TODO change data type of sudoku and quadrant from array to list
 # TODO change all other uses of array datatype to list datatype

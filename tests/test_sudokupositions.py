@@ -1,5 +1,5 @@
 import pytest
-from src.sudokuku import manager
+from sudokuku import manager
 
 class TestSudokuPositions():
     

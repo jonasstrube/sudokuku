@@ -1,6 +1,5 @@
 # Sudokuku
 
-
 [![Python Version](https://img.shields.io/pypi/pyversions/sudokuku?style=flat-square)](https://pypi.org/project/sudokuku)
 [![License](https://img.shields.io/pypi/l/sudokuku?style=flat-square)](https://github.com/jonasstrube/sudokuku/blob/main/LICENSE)
 
@@ -25,3 +24,7 @@ You can run all tests via
 You can also look up code coverage, for example using [pytest-cov](https://pypi.org/project/pytest-cov/).
 
     py -m pytest --cov src/sudokuku/
+
+For testing your own changes, install sudokuku in development mode. The package installation will link directly to your local development files, not to the official files you downloaded from pypi.
+
+    pip install -e ./

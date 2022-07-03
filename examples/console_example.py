@@ -43,7 +43,7 @@ def get_sudoku_input() -> array:
                 [None, None, None, None, 8, None, None, 3, 6],
                 [8, None, None, None, 2, 7, 3, None, None],
                 [None, 9, None, None, None, None, None, None, None],
-                [7, None, 1, None, 6, 9, None, 4, 8]
+                [7, None, 1, None, 6, 9, None, None, 8]
             ]
         ]
     }

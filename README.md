@@ -7,7 +7,7 @@
 [![PyPI Downloads](https://img.shields.io/pypi/dm/sudokuku?style=flat-square)](https://pypi.org/project/sudokuku)
 ![GitHub Repository Size](https://shields.io/github/repo-size/jonasstrube/sudokuku?style=flat-square)
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/jonasstrube/sudokuku?style=flat-square)
-[![codecov](https://codecov.io/gh/jonasstrube/sudokuku/branch/main/graph/badge.svg)](https://codecov.io/gh/jonasstrube/sudokuku)
+[![codecov](https://img.shields.io/codecov/c/github/jonasstrube/sudokuku?style=flat-square)](https://codecov.io/gh/jonasstrube/sudokuku)
 
 A package for solving sudokus
 

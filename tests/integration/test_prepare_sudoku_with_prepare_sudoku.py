@@ -34,3 +34,35 @@ class TestPrepareSudokuWithPrepareSudoku():
 
         assert sudoku_solved_calculated == sudoku_solved_expected
 
+    # TODO fix Exception (see notes on paper)
+    def test_level_6_sudoku(self):
+        sudoku_unsolved = [
+                    [3, None, None, 8, None, None, 4, 1, None],
+                    [None, None, None, 2, 3, None, None, None, 5],
+                    [None, None, 8, None, None, 1, None, None, 3],
+                    [6, None, 4, None, None, None, 2, None, None],
+                    [1, None, 9, 6, None, None, None, 5, None],
+                    [None, None, None, None, 8, None, None, 3, 6],
+                    [8, None, None, None, 2, 7, 3, None, None],
+                    [None, 9, None, None, None, None, None, None, None],
+                    [7, None, 1, None, 6, 9, None, 4, 8]
+                ]
+        
+        sudoku_solved_expected = [
+                    [3, 6, 2, 8, 9, 5, 4, 1, 7],
+                    [4, 1, 7, 2, 3, 6, 9, 8, 5],
+                    [9, 5, 8, 7, 4, 1, 6, 2, 3],
+                    [6, 8, 4, 1, 5, 3, 2, 7, 9],
+                    [1, 3, 9, 6, 7, 2, 8, 5, 4],
+                    [2, 7, 5, 9, 8, 4, 1, 3, 6],
+                    [8, 4, 6, 5, 2, 7, 3, 9, 1],
+                    [5, 9, 3, 4, 1, 8, 7, 6, 2],
+                    [7, 2, 1, 3, 6, 9, 5, 4, 8]
+                ]
+        
+        sudokuwrapped_calculated: Sudokuwrapped = manager.solve_sudoku(sudoku_unsolved)
+
+        sudoku_solved_calculated = sudokuwrapped_calculated.sudoku
+
+        assert sudoku_solved_calculated == sudoku_solved_expected
+

@@ -1,7 +1,10 @@
 from array import array
 from copy import deepcopy
+from dataclasses import Field
 
+from sudokuku.field_status import FieldStatus
 from sudokuku.sudokuwrapped import Sudokuwrapped
+from sudokuku.utils.coordinate_calculator import CoordinateCalculator
 
 # TODO change data type of sudoku and quadrant from array to list
 # TODO change all other uses of array datatype to list datatype
@@ -26,7 +29,7 @@ def iterate_sudoku(sudoku: array) -> array:
     for number in range(1, 10): # 1 to 9
         for quadrant_index in range(9): # 9 quadrants, 0 to 8 
             if not number_is_in_quadrant(number, quadrant_index, sudoku):
-                possible_coordinates = get_possible_coordinates_of_number(number, sudoku, quadrant_index=quadrant_index)
+                possible_coordinates = determine_possible_coordinates_of_number(number, sudoku, quadrant_index=quadrant_index)
                 
                 if len(possible_coordinates) == 1:
                     # fill in number if it only has one possible position 
@@ -40,7 +43,7 @@ def iterate_sudoku(sudoku: array) -> array:
                     block_possible = coordinates_are_in_line(possible_coordinates)
                     if block_possible:
                         block_line_or_column(number, possible_coordinates, sudoku)
-                    coordinates_to_block = get_coordinates_of_fields_definitely_blocked_by_possible_numbers(number, quadrant_index, sudoku)
+                    coordinates_to_block = determine_coordinates_of_fields_definitely_blocked_by_possible_numbers(number, quadrant_index, sudoku)
                     if len(coordinates_to_block) > 0:
                         for coordinate in coordinates_to_block:
                             # IMPORTANT implement
@@ -55,7 +58,7 @@ def iterate_sudoku(sudoku: array) -> array:
         for line_index in range(9): # 0 to 8
             if not same_number_in_line_or_column(number, sudoku, line=line_index):
                 # TODO implement search for coordinates in line in get_possible_coordinates_of_number
-                possible_coordinates = get_possible_coordinates_of_number(number, sudoku, line=line_index)
+                possible_coordinates = determine_possible_coordinates_of_number(number, sudoku, line=line_index)
 
                 if len(possible_coordinates) == 1:
                     # IMPORTANT fix decentralized access of sudoku
@@ -75,7 +78,7 @@ def iterate_sudoku(sudoku: array) -> array:
         for column_index in range(9): # 0 to 8
             if not same_number_in_line_or_column(number, sudoku, column=column_index):
                 # TODO implement search for coordinates in column in get_possible_coordinates_of_number
-                possible_coordinates = get_possible_coordinates_of_number(number, sudoku, column=column_index)
+                possible_coordinates = determine_possible_coordinates_of_number(number, sudoku, column=column_index)
 
                 if len(possible_coordinates) == 1:
                     # IMPORTANT fix decentralized access of sudoku
@@ -99,7 +102,10 @@ def prepare_sudoku(sudoku_raw: array) -> array:
     for line in range(9):
         for column in range(9):
             # IMPORTANT fix decentralized access of sudoku
-            sudoku[line][column] = [sudoku[line][column], []]
+            if sudoku[line][column] == None:
+                sudoku[line][column] = [sudoku[line][column], [], FieldStatus.EMPTY]
+            else:
+                sudoku[line][column] = [sudoku[line][column], [], FieldStatus.FILLED]
     return sudoku
 
 def clean_sudoku(sudoku_analytic: array) -> array:
@@ -232,6 +238,9 @@ def block_line_or_column(number: int, blocking_positions: array, sudoku: array) 
         # IMPORTANT fix decentralized access of blocking numbers
         sudoku[position[0]][position[1]][1].append(number)
 
+def get_possible_numbers(line_index: int, column_index: int, sudoku_to_work_on: list) -> list:
+    return deepcopy(sudoku_to_work_on[line_index][column_index][1])
+
 # -----------------------------------------------
 # QUADRANTS POSITIONS - ACCESS AND HELPER FUNCTIONS
 # -----------------------------------------------
@@ -331,7 +340,7 @@ def quadrantcolumn_is_blocked_by_blocking_numbers(number: int, column_quadrantre
             return False
     return True
 
-def get_possible_coordinates_of_number(number: int, sudoku_to_work_on: array, quadrant_index=None, line=None, column=None) -> array:
+def determine_possible_coordinates_of_number(number: int, sudoku_to_work_on: array, quadrant_index=None, line=None, column=None) -> array:
     optional_argument_sum = 0
     if not quadrant_index == None: optional_argument_sum += 1
     if not line == None: optional_argument_sum += 1
@@ -378,35 +387,57 @@ def get_possible_coordinates_of_number(number: int, sudoku_to_work_on: array, qu
     
     return possible_coordinates
 
-def get_coordinates_of_fields_definitely_blocked_by_possible_numbers(number: int, quadrant_index: int, sudoku_to_work_on: list) -> list:
+def get_coordinates_with_possible_number_in_quadrant(number: int, quadrant_index: int, sudoku_to_work_on: list) -> list:
+    quadrant = get_quadrant(quadrant_index, sudoku_to_work_on)
+    
+    possibly_occupied_coordinates = []
+    for line_index in range(len(quadrant)):
+        line = quadrant[line_index]
+        for column_index in range(len(line)):
+            field = line[column_index]
+            field_value: int = field[0]
+            field_possible_numbers: list = field[1]
+            field_status: FieldStatus = field[2]
+            if (    (field_value == None)    
+                and (field_status == FieldStatus.EMPTY or field_status == FieldStatus.BLOCKED) 
+                and (number in field_possible_numbers)):
+
+                coordinate = CoordinateCalculator.calculate_sudoku_index_from_quadrantrelative_index(quadrant_index, line_index, column_index)
+                possibly_occupied_coordinates.append(coordinate)
+
+    return possibly_occupied_coordinates
+
+def determine_coordinates_of_fields_definitely_blocked_by_possible_numbers(number: int, quadrant_index: int, sudoku_to_work_on: list) -> list:
     ## if in every blocked coordinate are as many possible numbers, as possible coordinates for the current number, BUT all of these numbers dont fit anywhere else in the quadrant:
     ##   give out all of these coordinates
     
-    # TODO implement or find function get_blocked_coordinates_of_quadrant
-    # blocked_fields = deepcopy(get_blocked_coordinates_of_quadrant(quadrant_index, sudoku_to_work_on))
-    blocked_fields = [[[3, 1], [3, 8]], [[4, 1], [3, 8]]]
+    # BROKEN fix Test test_2_fields_with_2_numbers_but_one_fits_somewhere_else_in_quadrant
 
-    ## blocked_fields = [[[3, 1], [3, 8]], [[4, 1], [3, 8]]]                --> block!
-    ## blocked_fields = [[[3, 1], [3, 8]], [[4, 1], [3, 8]], [[5, 1], [8]]] --> no block!
+    possible_coordinates = deepcopy(get_coordinates_with_possible_number_in_quadrant(number, quadrant_index, sudoku_to_work_on))
+
+    possible_fields = []
+    for coordinate in possible_coordinates:
+        possible_numbers = get_possible_numbers(coordinate[0], coordinate[1], sudoku_to_work_on)
+        possible_fields.append([coordinate, possible_numbers])
     
-    count_of_blocked_fields = len(blocked_fields)
+    count_of_possible_fields = len(possible_fields)
 
-    all_distinct_blocking_numbers = set()
-    for field in blocked_fields:
-        blocking_numbers = field[1]
-        for number in blocking_numbers:
-            all_distinct_blocking_numbers.add(number)
+    all_distinct_possible_numbers = set()
+    for field in possible_fields:
+        possible_numbers = field[1]
+        for current_number in possible_numbers:
+            all_distinct_possible_numbers.add(current_number)
 
-    if not len(all_distinct_blocking_numbers) == count_of_blocked_fields:
-        if len(all_distinct_blocking_numbers) > count_of_blocked_fields:
+    if not len(all_distinct_possible_numbers) == count_of_possible_fields:
+        if len(all_distinct_possible_numbers) > count_of_possible_fields:
             return []
         else:
-            # when the package marks every possible number in quadrants in the future: raise Exception, as it cant happen that e.g. only 2 numbers fit 3 fields
+            # TODO when the package marks every possible number in quadrants in the future: raise Exception, as it cant happen that e.g. only 2 numbers fit 3 fields
             return [] 
 
 
     return_fields = []
-    for field in blocked_fields:
+    for field in possible_fields:
         return_fields.append(field[0])
 
     return return_fields

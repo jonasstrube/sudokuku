@@ -64,7 +64,7 @@ def iterate_sudoku(sudoku: array) -> array:
         for line_index in range(9): # 0 to 8
             if not same_number_in_line_or_column(number, sudoku, line=line_index):
                 # TODO implement search for coordinates in line in get_possible_coordinates_of_number
-                possible_coordinates = determine_possible_coordinates_of_number(number, sudoku, line=line_index)
+                possible_coordinates = determine_possible_coordinates_of_number(number, sudoku, line_index=line_index)
 
                 if len(possible_coordinates) == 1:
                     # IMPORTANT fix decentralized access of sudoku
@@ -84,7 +84,7 @@ def iterate_sudoku(sudoku: array) -> array:
         for column_index in range(9): # 0 to 8
             if not same_number_in_line_or_column(number, sudoku, column=column_index):
                 # TODO implement search for coordinates in column in get_possible_coordinates_of_number
-                possible_coordinates = determine_possible_coordinates_of_number(number, sudoku, column=column_index)
+                possible_coordinates = determine_possible_coordinates_of_number(number, sudoku, column_index=column_index)
 
                 if len(possible_coordinates) == 1:
                     # IMPORTANT fix decentralized access of sudoku

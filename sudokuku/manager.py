@@ -4,7 +4,7 @@ from dataclasses import Field
 
 from sudokuku.field_status import FieldStatus
 from sudokuku.sudokuwrapped import Sudokuwrapped
-from sudokuku.utils.coordinate_calculator import CoordinateCalculator
+from sudokuku.coordinate_calculator import CoordinateCalculator
 
 # TODO change use of data type array to list (e.g. sudoku and quadrant)
 

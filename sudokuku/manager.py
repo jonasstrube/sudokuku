@@ -215,8 +215,11 @@ def number_is_possible_on_position(number: int, line: int, column: int, sudoku_t
     return False
 
 def number_fits_in_position(number: int, line: int, column: int, sudoku_to_work_on: array) -> bool:
-    if (    same_number_in_line_or_column(number, sudoku_to_work_on, line, column) 
-        or blocking_numbers_in_line_or_column(number, line, column, sudoku_to_work_on)):
+    quadrant_index = get_quadrant_index_of_position(line, column)
+
+    if (same_number_in_line_or_column(number, sudoku_to_work_on, line, column)
+    or number_is_in_quadrant(number, quadrant_index, sudoku_to_work_on) 
+    or blocking_numbers_in_line_or_column(number, line, column, sudoku_to_work_on)):
         return False
     else:
         return True

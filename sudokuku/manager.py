@@ -353,47 +353,45 @@ def quadrantcolumn_is_blocked_by_blocking_numbers(number: int, column_quadrantre
             return False
     return True
 
-def determine_possible_coordinates_of_number(number: int, sudoku_to_work_on: array, quadrant_index=None, line=None, column=None) -> array:
+def determine_possible_coordinates_of_number(number: int, sudoku_to_work_on: array, quadrant_index=None, line_index=None, column_index=None) -> list:
     optional_argument_sum = 0
     if not quadrant_index == None: optional_argument_sum += 1
-    if not line == None: optional_argument_sum += 1
-    if not column == None: optional_argument_sum += 1
+    if not line_index == None: optional_argument_sum += 1
+    if not column_index == None: optional_argument_sum += 1
 
     if not optional_argument_sum == 1:
         # exception: only one argument allowed: quadrant_index, line_index or column_index
-        # this function can only scan for possible coordinates in quadrants, lines or columns
+        # this function can only scan for possible coordinates in ONE of quadrants or lines or columns
         raise Exception
 
+    possible_coordinates = []
     if not quadrant_index == None:
-        possible_coordinates: array = []
         for line_quadrantrelative in range(0, 3):
-            line = line_quadrantrelative + quadrant_index - (quadrant_index % 3)
+            line_index = line_quadrantrelative + quadrant_index - (quadrant_index % 3)
             for column_quadrantrelative in range(0, 3):
-                column = column_quadrantrelative + (quadrant_index % 3) * 3
-                if position_is_already_taken(line, column, sudoku_to_work_on):
+                column_index = column_quadrantrelative + (quadrant_index % 3) * 3
+                if position_is_already_taken(line_index, column_index, sudoku_to_work_on):
                     pass
-                elif number_fits_in_position(number, line, column, sudoku_to_work_on):
-                    possible_coordinates.append([line, column])
+                elif number_fits_in_position(number, line_index, column_index, sudoku_to_work_on):
+                    possible_coordinates.append([line_index, column_index])
                 else:
                     # number does not fit the position
                     pass
-    elif not line == None:
-        possible_coordinates: array = []
+    elif not line_index == None:
         for column_index in range(9):
-            if position_is_already_taken(line, column_index, sudoku_to_work_on):
+            if position_is_already_taken(line_index, column_index, sudoku_to_work_on):
                 pass
-            elif number_fits_in_position(number, line, column_index, sudoku_to_work_on):
-                possible_coordinates.append([line, column_index])
+            elif number_fits_in_position(number, line_index, column_index, sudoku_to_work_on):
+                possible_coordinates.append([line_index, column_index])
             else:
                 # number does not fit the position
                 pass
-    elif not column == None:
-        possible_coordinates: array = []
+    elif not column_index == None:
         for line_index in range(9):
-            if position_is_already_taken(line_index, column, sudoku_to_work_on):
+            if position_is_already_taken(line_index, column_index, sudoku_to_work_on):
                 pass
-            elif number_fits_in_position(number, line_index, column, sudoku_to_work_on):
-                possible_coordinates.append([line_index, column])
+            elif number_fits_in_position(number, line_index, column_index, sudoku_to_work_on):
+                possible_coordinates.append([line_index, column_index])
             else:
                 # number does not fit the position
                 pass

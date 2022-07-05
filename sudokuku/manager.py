@@ -126,9 +126,9 @@ def clean_sudoku(sudoku_analytic: array) -> array:
 # SUDOKU POSITIONS - ACCESS AND HELPER FUNCTIONS
 # -----------------------------------------------
 
-def position_is_already_taken(line: int, column: int, sudoku_or_quadrant: array) -> bool:
-        if (sudoku_or_quadrant[line][column][0] == None 
-        and not field_is_blocked(line, column, sudoku_or_quadrant)):
+def position_is_already_taken(line_index: int, column_index: int, sudoku_or_quadrant: array) -> bool:
+        if (sudoku_or_quadrant[line_index][column_index][0] == None 
+        and not field_is_blocked(line_index, column_index, sudoku_or_quadrant)):
             return False
         else:
             return True

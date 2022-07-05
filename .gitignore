@@ -140,14 +140,5 @@ cython_debug/
 # VS Code
 .vscode/
 
-# Docker
-Dockerfile
-
-# local try out
-test.py
-
-# Database
-db/*
-
-# private data
-users.json
+# documentation
+*.docx

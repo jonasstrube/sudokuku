@@ -11,7 +11,7 @@ from sudokuku.sudoku_handler import SudokuHandler
 
 def solve_sudoku(sudoku: array) -> Sudokuwrapped:
     sudoku_input = deepcopy(sudoku)
-    sudoku_iterated: array = prepare_sudoku(sudoku_input)
+    sudoku_iterated: array = SudokuHandler.prepare_sudoku(sudoku_input)
     sudoku_old_state: array = None
     iterations = 0
     while(not sudoku_iterated == sudoku_old_state): # as long as something is changing
@@ -19,7 +19,7 @@ def solve_sudoku(sudoku: array) -> Sudokuwrapped:
         sudoku_iterated: array = iterate_sudoku(sudoku_old_state)
         iterations += 1
     
-    sudoku_cleaned = clean_sudoku(sudoku_old_state)
+    sudoku_cleaned = SudokuHandler.clean_sudoku(sudoku_old_state)
     sudoku_wrapped = Sudokuwrapped(sudoku_cleaned, iterations)
     return sudoku_wrapped
 
@@ -94,25 +94,6 @@ def iterate_sudoku(sudoku: array) -> array:
                 # number is already in line
                 pass
 
-    return sudoku
-
-def prepare_sudoku(sudoku_raw: array) -> array:
-    sudoku = deepcopy(sudoku_raw)
-    for line in range(9):
-        for column in range(9):
-            # IMPORTANT fix decentralized access of sudoku
-            if sudoku[line][column] == None:
-                sudoku[line][column] = [sudoku[line][column], [], FieldState.EMPTY]
-            else:
-                sudoku[line][column] = [sudoku[line][column], [], FieldState.FILLED]
-    return sudoku
-
-def clean_sudoku(sudoku_analytic: array) -> array:
-    sudoku = deepcopy(sudoku_analytic)
-    for line in range(9):
-        for column in range(9):
-            # IMPORTANT fix decentralized access of sudoku
-            sudoku[line][column] = sudoku[line][column][0]
     return sudoku
 
 # -----------------------------------------------

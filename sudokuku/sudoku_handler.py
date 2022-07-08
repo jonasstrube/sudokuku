@@ -33,6 +33,25 @@ class SudokuHandler:
                 quadrant[line][column] = __class__.__get_field(sudoku_line, sudoku_column, sudoku_to_work_on)
         
         return quadrant
+    
+    @staticmethod
+    def prepare_sudoku(sudoku_raw: list) -> list:
+        sudoku = deepcopy(sudoku_raw)
+        for line in range(9):
+            for column in range(9):
+                if sudoku[line][column] == None:
+                    sudoku[line][column] = [sudoku[line][column], [], FieldState.EMPTY]
+                else:
+                    sudoku[line][column] = [sudoku[line][column], [], FieldState.FILLED]
+        return sudoku
+
+    @staticmethod
+    def clean_sudoku(sudoku_analytic: list) -> list:
+        sudoku = deepcopy(sudoku_analytic)
+        for line in range(9):
+            for column in range(9):
+                sudoku[line][column] = __class__.get_number(line, column, sudoku_analytic)
+        return sudoku
 
     @staticmethod
     def __get_field(line_index: int, column_index: int, sudoku_to_work_on: list):

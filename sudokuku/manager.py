@@ -128,15 +128,15 @@ def field_is_not_possible_for_number(number: int, line_index: int, column_index:
 
 def same_number_in_line_or_column(number: int, sudoku_to_work_on: array, line_index=None, column_index=None) -> bool:
     if not line_index == None:
-        for current_column in range(0, 9):
-            # IMPORTANT fix dezentralized sudoku access
-            if sudoku_to_work_on[line_index][current_column][0] == number:
+        for current_column_index in range(0, 9):
+            sudoku_number: int = SudokuHandler.get_number(line_index, current_column_index, sudoku_to_work_on)
+            if sudoku_number == number:
                 return True
     
     if not column_index == None:
-        for current_line in range(0, 9):
-            # IMPORTANT fix dezentralized sudoku access
-            if sudoku_to_work_on[current_line][column_index][0] == number:
+        for current_line_index in range(0, 9):
+            sudoku_number: int = SudokuHandler.get_number(current_line_index, column_index, sudoku_to_work_on)
+            if sudoku_number == number:
                 return True
     
     return False
@@ -186,7 +186,7 @@ def blocking_numbers_in_line_or_column(number: int, line: int, column: int, sudo
         if not position_is_in_quadrant(line, current_column, quadrant_index_of_position) and sudoku_to_work_on[line][current_column][0] == None:
             if number_is_in_possible_numbers_in_field(number, line, current_column, sudoku_to_work_on):
                 current_quadrant_index = get_quadrant_index_of_position(line, current_column)
-                current_quadrant = get_quadrant(current_quadrant_index, sudoku_to_work_on)
+                current_quadrant = SudokuHandler.get_quadrant(current_quadrant_index, sudoku_to_work_on)
                 if quadrantline_is_blocked_by_blocking_numbers(number, line_quadrantrelative, current_quadrant):
                     return True
 
@@ -194,7 +194,7 @@ def blocking_numbers_in_line_or_column(number: int, line: int, column: int, sudo
         if not position_is_in_quadrant(current_line, column, quadrant_index_of_position) and sudoku_to_work_on[current_line][column][0] == None:
             if number_is_in_possible_numbers_in_field(number, current_line, column, sudoku_to_work_on):
                 current_quadrant_index = get_quadrant_index_of_position(current_line, column)
-                current_quadrant = get_quadrant(current_quadrant_index, sudoku_to_work_on)
+                current_quadrant = SudokuHandler.get_quadrant(current_quadrant_index, sudoku_to_work_on)
                 if quadrantcolumn_is_blocked_by_blocking_numbers(number, column_quadrantrelative, current_quadrant):
                     return True
     
@@ -221,7 +221,7 @@ def erase_possible_positions_of_number(number: int, quadrant_index: int, sudoku:
     quadrant_position_list = get_coordinates_in_quadrant(quadrant_index)
     
     for quadrant_position in quadrant_position_list:
-        # IMPORTANT fix decentralized access of blocking numbers
+        # IMPORTANT fix decentralized access of blocking numbers: possible positions
         possible_positions = sudoku[quadrant_position[0]][quadrant_position[1]][1]
         for index in range(len(possible_positions)):
             if possible_positions[index] == number:
@@ -230,52 +230,32 @@ def erase_possible_positions_of_number(number: int, quadrant_index: int, sudoku:
 
 def remove_numbers_from_possible_position(line_index: int, column_index: int, sudoku: array, numbers_to_remove=None) -> None:
     if numbers_to_remove == None:
-        # IMPORTANT fix decentralized access of blocking numbers
+        # IMPORTANT fix decentralized access of blocking numbers: possible positions
         sudoku[line_index][column_index][1] = []
     else:
-        # IMPORTANT fix decentralized access of blocking numbers
+        # IMPORTANT fix decentralized access of blocking numbers: possible positions
         possible_numbers = deepcopy(sudoku[line_index][column_index][1])
         remaining_numbers: set = set(possible_numbers) - set(numbers_to_remove)
         sudoku[line_index][column_index][1] = list(remaining_numbers)
 
 def set_possible_positions_of_number(number: int, possible_position_coordinates: array, sudoku_to_work_on: array) -> None:
     for position in possible_position_coordinates:
-        # IMPORTANT fix decentralized access of blocking numbers
+        # IMPORTANT fix decentralized access of blocking numbers: possible positions
         blocking_numbers = sudoku_to_work_on[position[0]][position[1]][1]
         for blocking_number in blocking_numbers:
             if number == blocking_number:
                 return None
     for position in possible_position_coordinates:
-        # IMPORTANT fix decentralized access of blocking numbers
+        # IMPORTANT fix decentralized access of blocking numbers: possible positions
         sudoku_to_work_on[position[0]][position[1]][1].append(number)
 
 def get_possible_numbers(line_index: int, column_index: int, sudoku_to_work_on: list) -> list:
-    # IMPORTANT fix decentralized access of blocking numbers
+    # IMPORTANT fix decentralized access of blocking numbers: possible positions
     return deepcopy(sudoku_to_work_on[line_index][column_index][1])
 
 # -----------------------------------------------
 # QUADRANTS POSITIONS - ACCESS AND HELPER FUNCTIONS
 # -----------------------------------------------
-
-def get_quadrant(quadrant_index: int, sudoku_to_work_on: array) -> array:
-    line_upper_left_field = quadrant_index - (quadrant_index % 3)
-    field_upper_left_field = (quadrant_index % 3) * 3
-    upper_left_field = [line_upper_left_field, field_upper_left_field]
-
-    quadrant: array = [
-        [None, None, None],
-        [None, None, None],
-        [None, None, None]
-    ]
-
-    for line in range(0, 3):
-        for column in range(0, 3):
-            sudoku_line = upper_left_field[0] + line
-            sudoku_column = upper_left_field[1] + column
-            # IMPORTANT fix decentralized access of blocking numbers
-            quadrant[line][column] = deepcopy(sudoku_to_work_on[sudoku_line][sudoku_column])
-    
-    return quadrant
 
 def get_quadrant_index_of_position(line: int, column: int) -> int:
     quadrant_line = int(line / 3)
@@ -291,7 +271,7 @@ def position_is_in_quadrant(line: int, column: int, quadrant_index_of_position: 
         return False
 
 def number_is_in_quadrant(number: int, quadrant_index: int, sudoku_to_work_on: array) -> bool:
-    quadrant = get_quadrant(quadrant_index, sudoku_to_work_on)
+    quadrant = SudokuHandler.get_quadrant(quadrant_index, sudoku_to_work_on)
 
     for line in quadrant:
         for field in line:
@@ -398,7 +378,7 @@ def determine_possible_coordinates_of_number(number: int, sudoku_to_work_on: arr
     return possible_coordinates
 
 def get_coordinates_with_possible_number_in_quadrant(number: int, quadrant_index: int, sudoku_to_work_on: list) -> list:
-    quadrant = get_quadrant(quadrant_index, sudoku_to_work_on)
+    quadrant = SudokuHandler.get_quadrant(quadrant_index, sudoku_to_work_on)
     
     coordinates_with_possible_number = []
     for line_index in range(len(quadrant)):

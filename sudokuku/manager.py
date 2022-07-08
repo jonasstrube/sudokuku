@@ -2,7 +2,7 @@ from array import array
 from copy import deepcopy
 from dataclasses import Field
 
-from sudokuku.field_status import FieldStatus
+from sudokuku.field_state import FieldState
 from sudokuku.sudokuwrapped import Sudokuwrapped
 from sudokuku.coordinate_calculator import CoordinateCalculator
 from sudokuku.sudoku_handler import SudokuHandler
@@ -48,7 +48,7 @@ def iterate_sudoku(sudoku: array) -> array:
                         for field in fields_to_block:
                             numbers_not_anymore_possible_at_field = list(set(field[1]) - set(numbers_to_block))
                             remove_numbers_from_possible_position(line_index=field[0][0], column_index=field[0][1], sudoku=sudoku, numbers_to_remove=numbers_not_anymore_possible_at_field)
-                            SudokuHandler.set_field_status(field[0][0], field[0][1], FieldStatus.BLOCKED, sudoku)
+                            SudokuHandler.set_field_state(field[0][0], field[0][1], FieldState.BLOCKED, sudoku)
                 else:
                     # Exception: there is no possible coordinate in the given quadrant for the number
                     raise Exception
@@ -102,9 +102,9 @@ def prepare_sudoku(sudoku_raw: array) -> array:
         for column in range(9):
             # IMPORTANT fix decentralized access of sudoku
             if sudoku[line][column] == None:
-                sudoku[line][column] = [sudoku[line][column], [], FieldStatus.EMPTY]
+                sudoku[line][column] = [sudoku[line][column], [], FieldState.EMPTY]
             else:
-                sudoku[line][column] = [sudoku[line][column], [], FieldStatus.FILLED]
+                sudoku[line][column] = [sudoku[line][column], [], FieldState.FILLED]
     return sudoku
 
 def clean_sudoku(sudoku_analytic: array) -> array:
@@ -407,9 +407,9 @@ def get_coordinates_with_possible_number_in_quadrant(number: int, quadrant_index
             field = line[column_index]
             field_value: int = field[0]
             field_possible_numbers: list = field[1]
-            field_status: FieldStatus = field[2]
+            field_state: FieldState = field[2]
             if (    (field_value == None)    
-                and (field_status == FieldStatus.EMPTY or field_status == FieldStatus.BLOCKED) 
+                and (field_state == FieldState.EMPTY or field_state == FieldState.BLOCKED) 
                 and (number in field_possible_numbers)):
                 coordinate = CoordinateCalculator.calculate_sudoku_index_from_quadrantrelative_index(quadrant_index, line_index, column_index)
                 coordinates_with_possible_number.append(coordinate)
@@ -450,4 +450,4 @@ def determine_fields_and_numbers_blocked_by_possible_numbers(number: int, quadra
 def field_is_blocked_for_number(number: int, line_index: int, column_index: int, sudoku_to_work_on: list) -> bool:
     # IMPORTANT fix decentralized access of blocking numbers
     possible_numbers = get_possible_numbers(line_index, column_index, sudoku_to_work_on)
-    return (sudoku_to_work_on[line_index][column_index][2] == FieldStatus.BLOCKED) and (not number in possible_numbers)
+    return (sudoku_to_work_on[line_index][column_index][2] == FieldState.BLOCKED) and (not number in possible_numbers)

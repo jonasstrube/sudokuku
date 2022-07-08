@@ -1,4 +1,4 @@
-from sudokuku.field_status import FieldStatus
+from sudokuku.field_state import FieldState
 
 class SudokuHandler:
     @staticmethod
@@ -6,5 +6,5 @@ class SudokuHandler:
         sudoku_to_work_on[line_index][column_index][0] = number
 
     @staticmethod
-    def set_field_status(line_index: int, column_index: int, field_status: FieldStatus, sudoku_to_work_on: list) -> None:
-        sudoku_to_work_on[line_index][column_index][2] = field_status
+    def set_field_state(line_index: int, column_index: int, field_state: FieldState, sudoku_to_work_on: list) -> None:
+        sudoku_to_work_on[line_index][column_index][2] = field_state

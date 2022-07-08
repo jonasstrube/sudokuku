@@ -3,12 +3,21 @@ from sudokuku.field_state import FieldState
 
 class SudokuHandler:
     @staticmethod
-    def get_number(line_index: int, column_index: int, sudoku_to_work_on: list) -> None:
+    def get_number(line_index: int, column_index: int, sudoku_to_work_on: list) -> int:
         return deepcopy(sudoku_to_work_on[line_index][column_index][0])
 
     @staticmethod
     def set_number(number: int, line_index: int, column_index: int, sudoku_to_work_on: list) -> None:
         sudoku_to_work_on[line_index][column_index][0] = deepcopy(number)
+
+
+    @staticmethod
+    def delete_possible_number(number: int, line_index: int, column_index: int, sudoku_to_work_on: list) -> list:
+        possible_numbers = SudokuHandler.__get_possible_numbers(line_index, column_index, sudoku_to_work_on)
+        for index in range(len(possible_numbers)):
+            if possible_numbers[index] == number:
+                del(sudoku_to_work_on[line_index][column_index][1][index])
+                return
 
     @staticmethod
     def set_field_state(line_index: int, column_index: int, field_state: FieldState, sudoku_to_work_on: list) -> None:
@@ -56,3 +65,7 @@ class SudokuHandler:
     @staticmethod
     def __get_field(line_index: int, column_index: int, sudoku_to_work_on: list):
         return deepcopy(sudoku_to_work_on[line_index][column_index])
+    
+    @staticmethod
+    def __get_possible_numbers(line_index: int, column_index: int, sudoku_to_work_on: list) -> list:
+        return deepcopy(sudoku_to_work_on[line_index][column_index][1])

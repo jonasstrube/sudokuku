@@ -199,15 +199,10 @@ def determine_if_number_fits_in_field(number: int, line: int, column: int, sudok
         return True
 
 def erase_possible_positions_of_number(number: int, quadrant_index: int, sudoku: array) -> None:
-    quadrant_position_list = get_coordinates_in_quadrant(quadrant_index)
+    quadrant_coordinates_list = get_coordinates_in_quadrant(quadrant_index)
     
-    for quadrant_position in quadrant_position_list:
-        # IMPORTANT fix decentralized access of blocking numbers: possible positions
-        possible_positions = sudoku[quadrant_position[0]][quadrant_position[1]][1]
-        for index in range(len(possible_positions)):
-            if possible_positions[index] == number:
-                del(possible_positions[index])
-                break
+    for quadrant_coordinate in quadrant_coordinates_list:
+        SudokuHandler.delete_possible_number(number, quadrant_coordinate[0], quadrant_coordinate[1], sudoku)
 
 def remove_numbers_from_possible_position(line_index: int, column_index: int, sudoku: array, numbers_to_remove=None) -> None:
     if numbers_to_remove == None:

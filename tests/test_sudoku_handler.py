@@ -1,8 +1,8 @@
 from sudokuku.field_state import FieldState
 from sudokuku.sudoku_handler import SudokuHandler
 
-class TestBlockField:
-    def test_normal_case(self):
+class TestSudokuHandler:
+    def test_set_field_state_continuation(self):
         sudoku_input = [
                     [[3, [], FieldState.FILLED], [None, [], FieldState.EMPTY], [None, [], FieldState.EMPTY], [8, [], FieldState.FILLED], [None, [], FieldState.EMPTY], [None, [], FieldState.EMPTY], [4, [], FieldState.FILLED], [1, [], FieldState.FILLED], [None, [], FieldState.EMPTY]],
                     [[None, [], FieldState.EMPTY], [1, [], FieldState.FILLED], [None, [], FieldState.EMPTY], [2, [], FieldState.FILLED], [3, [], FieldState.FILLED], [None, [], FieldState.EMPTY], [None, [], FieldState.EMPTY], [None, [], FieldState.EMPTY], [5, [], FieldState.FILLED]],
@@ -20,3 +20,7 @@ class TestBlockField:
         SudokuHandler.set_field_state(3, 1, FieldState.BLOCKED, sudoku_input)
 
         assert sudoku_input[3][1][2] == FieldState.BLOCKED
+
+        SudokuHandler.set_field_state(3, 1, FieldState.FILLED, sudoku_input)
+
+        assert sudoku_input[3][1][2] == FieldState.FILLED

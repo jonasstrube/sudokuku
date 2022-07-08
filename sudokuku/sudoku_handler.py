@@ -30,8 +30,10 @@ class SudokuHandler:
             for column in range(0, 3):
                 sudoku_line = upper_left_field[0] + line
                 sudoku_column = upper_left_field[1] + column
-                # IMPORTANT fix decentralized access of blocking numbers
-                quadrant[line][column] = deepcopy(sudoku_to_work_on[sudoku_line][sudoku_column])
+                quadrant[line][column] = __class__.__get_field(sudoku_line, sudoku_column, sudoku_to_work_on)
         
         return quadrant
 
+    @staticmethod
+    def __get_field(line_index: int, column_index: int, sudoku_to_work_on: list):
+        return deepcopy(sudoku_to_work_on[line_index][column_index])

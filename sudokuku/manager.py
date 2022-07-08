@@ -48,7 +48,7 @@ def iterate_sudoku(sudoku: array) -> array:
                         for field in fields_to_block:
                             numbers_not_anymore_possible_at_field = list(set(field[1]) - set(numbers_to_block))
                             remove_numbers_from_possible_position(line_index=field[0][0], column_index=field[0][1], sudoku=sudoku, numbers_to_remove=numbers_not_anymore_possible_at_field)
-                            block_field(field[0][0], field[0][1], sudoku)
+                            SudokuHandler.set_field_status(field[0][0], field[0][1], FieldStatus.BLOCKED, sudoku)
                 else:
                     # Exception: there is no possible coordinate in the given quadrant for the number
                     raise Exception
@@ -221,6 +221,7 @@ def erase_possible_positions_of_number(number: int, quadrant_index: int, sudoku:
     quadrant_position_list = get_coordinates_in_quadrant(quadrant_index)
     
     for quadrant_position in quadrant_position_list:
+        # IMPORTANT fix decentralized access of blocking numbers
         possible_positions = sudoku[quadrant_position[0]][quadrant_position[1]][1]
         for index in range(len(possible_positions)):
             if possible_positions[index] == number:
@@ -229,8 +230,10 @@ def erase_possible_positions_of_number(number: int, quadrant_index: int, sudoku:
 
 def remove_numbers_from_possible_position(line_index: int, column_index: int, sudoku: array, numbers_to_remove=None) -> None:
     if numbers_to_remove == None:
+        # IMPORTANT fix decentralized access of blocking numbers
         sudoku[line_index][column_index][1] = []
     else:
+        # IMPORTANT fix decentralized access of blocking numbers
         possible_numbers = deepcopy(sudoku[line_index][column_index][1])
         remaining_numbers: set = set(possible_numbers) - set(numbers_to_remove)
         sudoku[line_index][column_index][1] = list(remaining_numbers)
@@ -247,6 +250,7 @@ def set_possible_positions_of_number(number: int, possible_position_coordinates:
         sudoku_to_work_on[position[0]][position[1]][1].append(number)
 
 def get_possible_numbers(line_index: int, column_index: int, sudoku_to_work_on: list) -> list:
+    # IMPORTANT fix decentralized access of blocking numbers
     return deepcopy(sudoku_to_work_on[line_index][column_index][1])
 
 # -----------------------------------------------
@@ -268,6 +272,7 @@ def get_quadrant(quadrant_index: int, sudoku_to_work_on: array) -> array:
         for column in range(0, 3):
             sudoku_line = upper_left_field[0] + line
             sudoku_column = upper_left_field[1] + column
+            # IMPORTANT fix decentralized access of blocking numbers
             quadrant[line][column] = deepcopy(sudoku_to_work_on[sudoku_line][sudoku_column])
     
     return quadrant
@@ -442,9 +447,7 @@ def determine_fields_and_numbers_blocked_by_possible_numbers(number: int, quadra
     fields_to_block_by_numbers = [list(all_distinct_possible_numbers), possible_fields]
     return deepcopy(fields_to_block_by_numbers)
 
-def block_field(line_index: int, column_index: int, sudoku_to_work_on: list) -> None:
-    sudoku_to_work_on[line_index][column_index][2] = FieldStatus.BLOCKED
-
 def field_is_blocked_for_number(number: int, line_index: int, column_index: int, sudoku_to_work_on: list) -> bool:
+    # IMPORTANT fix decentralized access of blocking numbers
     possible_numbers = get_possible_numbers(line_index, column_index, sudoku_to_work_on)
     return (sudoku_to_work_on[line_index][column_index][2] == FieldStatus.BLOCKED) and (not number in possible_numbers)

@@ -62,7 +62,7 @@ class TestSudokuHandler:
             [[3, [], 2], [None, [], 0], [None, [], 0], [8, [], 2], [None, [], 0], [None, [6], 0], [4, [], 2], [1, [], 2], [None, [], 0]],
         ]
 
-        SudokuHandler.remove_numbers_from_possible_position(line_index=3, column_index=1, sudoku=sudoku_input)
+        SudokuHandler.remove_possible_numbers_from_position(line_index=3, column_index=1, sudoku=sudoku_input)
 
         assert sudoku_input[3][1][1] == []
 
@@ -79,7 +79,7 @@ class TestSudokuHandler:
             [[3, [], 2], [None, [], 0], [None, [], 0], [8, [], 2], [None, [], 0], [None, [6], 0], [4, [], 2], [1, [], 2], [None, [], 0]],
         ]
 
-        SudokuHandler.remove_numbers_from_possible_position(line_index=3, column_index=1, sudoku=sudoku_input, numbers_to_remove=[])
+        SudokuHandler.remove_possible_numbers_from_position(line_index=3, column_index=1, sudoku=sudoku_input, numbers_to_remove=[])
 
         assert set(sudoku_input[3][1][1]) == set([3, 8])
 
@@ -96,6 +96,6 @@ class TestSudokuHandler:
             [[3, [], 2], [None, [], 0], [None, [], 0], [8, [], 2], [None, [], 0], [None, [6], 0], [4, [], 2], [1, [], 2], [None, [], 0]],
         ]
 
-        SudokuHandler.remove_numbers_from_possible_position(line_index=3, column_index=1, sudoku=sudoku_input, numbers_to_remove=[4])
+        SudokuHandler.remove_possible_numbers_from_position(line_index=3, column_index=1, sudoku=sudoku_input, numbers_to_remove=[4])
 
         assert set(sudoku_input[3][1][1]) == set([3, 8])

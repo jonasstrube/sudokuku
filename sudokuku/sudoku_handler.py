@@ -36,6 +36,10 @@ class SudokuHandler:
         sudoku_to_work_on[line_index][column_index][2] = deepcopy(field_state)
 
     @staticmethod
+    def get_field_state(line_index: int, column_index: int, sudoku_to_work_on: list) -> FieldState:
+        return deepcopy(sudoku_to_work_on[line_index][column_index][2])
+
+    @staticmethod
     def get_quadrant(quadrant_index: int, sudoku_to_work_on: list) -> list:
         line_upper_left_field = quadrant_index - (quadrant_index % 3)
         field_upper_left_field = (quadrant_index % 3) * 3

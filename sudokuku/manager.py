@@ -391,6 +391,6 @@ def determine_fields_and_numbers_blocked_by_possible_numbers(number: int, quadra
     return deepcopy(fields_to_block_by_numbers)
 
 def field_is_blocked_for_number(number: int, line_index: int, column_index: int, sudoku_to_work_on: list) -> bool:
-    # IMPORTANT fix decentralized access of blocking numbers
     possible_numbers = SudokuHandler.get_possible_numbers(line_index, column_index, sudoku_to_work_on)
-    return (sudoku_to_work_on[line_index][column_index][2] == FieldState.BLOCKED) and (not number in possible_numbers)
+    field_state = SudokuHandler.get_field_state(line_index, column_index, sudoku_to_work_on)
+    return (field_state == FieldState.BLOCKED) and (not number in possible_numbers)

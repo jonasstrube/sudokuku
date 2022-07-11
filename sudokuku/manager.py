@@ -213,10 +213,6 @@ def set_possible_positions_of_number(number: int, possible_position_coordinates:
     for position in possible_position_coordinates:
         SudokuHandler.add_possible_number(number, position[0], position[1], sudoku_to_work_on)
 
-def get_possible_numbers(line_index: int, column_index: int, sudoku_to_work_on: list) -> list:
-    # IMPORTANT fix decentralized access of blocking numbers: possible positions
-    return deepcopy(sudoku_to_work_on[line_index][column_index][1])
-
 # -----------------------------------------------
 # QUADRANTS POSITIONS - ACCESS AND HELPER FUNCTIONS
 # -----------------------------------------------
@@ -368,7 +364,7 @@ def determine_fields_and_numbers_blocked_by_possible_numbers(number: int, quadra
 
     possible_fields = []
     for coordinate in possible_coordinates:
-        possible_numbers = get_possible_numbers(coordinate[0], coordinate[1], sudoku_to_work_on)
+        possible_numbers = SudokuHandler.get_possible_numbers(coordinate[0], coordinate[1], sudoku_to_work_on)
         possible_fields.append([coordinate, possible_numbers])
     
     count_of_possible_fields = len(possible_fields)
@@ -393,5 +389,5 @@ def determine_fields_and_numbers_blocked_by_possible_numbers(number: int, quadra
 
 def field_is_blocked_for_number(number: int, line_index: int, column_index: int, sudoku_to_work_on: list) -> bool:
     # IMPORTANT fix decentralized access of blocking numbers
-    possible_numbers = get_possible_numbers(line_index, column_index, sudoku_to_work_on)
+    possible_numbers = SudokuHandler.get_possible_numbers(line_index, column_index, sudoku_to_work_on)
     return (sudoku_to_work_on[line_index][column_index][2] == FieldState.BLOCKED) and (not number in possible_numbers)

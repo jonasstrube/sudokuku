@@ -24,14 +24,6 @@ class SudokuHandler:
             sudoku[line_index][column_index][1] = list(remaining_numbers)
 
     @staticmethod
-    def delete_possible_number(number: int, line_index: int, column_index: int, sudoku_to_work_on: list) -> list:
-        possible_numbers = SudokuHandler.__get_possible_numbers(line_index, column_index, sudoku_to_work_on)
-        for index in range(len(possible_numbers)):
-            if possible_numbers[index] == number:
-                del(sudoku_to_work_on[line_index][column_index][1][index])
-                return
-
-    @staticmethod
     def set_field_state(line_index: int, column_index: int, field_state: FieldState, sudoku_to_work_on: list) -> None:
         sudoku_to_work_on[line_index][column_index][2] = deepcopy(field_state)
 

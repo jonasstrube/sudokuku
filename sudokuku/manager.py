@@ -202,7 +202,7 @@ def erase_possible_positions_of_number(number: int, quadrant_index: int, sudoku:
     quadrant_coordinates_list = get_coordinates_in_quadrant(quadrant_index)
     
     for quadrant_coordinate in quadrant_coordinates_list:
-        SudokuHandler.delete_possible_number(number, quadrant_coordinate[0], quadrant_coordinate[1], sudoku)
+        SudokuHandler.delete_possible_numbers_from_position(quadrant_coordinate[0], quadrant_coordinate[1], sudoku, number)
 
 def set_possible_positions_of_number(number: int, possible_position_coordinates: array, sudoku_to_work_on: array) -> None:
     for position in possible_position_coordinates:

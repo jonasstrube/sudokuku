@@ -206,14 +206,12 @@ def erase_possible_positions_of_number(number: int, quadrant_index: int, sudoku:
 
 def set_possible_positions_of_number(number: int, possible_position_coordinates: array, sudoku_to_work_on: array) -> None:
     for position in possible_position_coordinates:
-        # IMPORTANT fix decentralized access of blocking numbers: possible positions
-        blocking_numbers = sudoku_to_work_on[position[0]][position[1]][1]
-        for blocking_number in blocking_numbers:
-            if number == blocking_number:
+        possible_numbers = SudokuHandler.get_possible_numbers(position[0], position[1], sudoku_to_work_on)
+        for possible_number in possible_numbers:
+            if number == possible_number:
                 return None
     for position in possible_position_coordinates:
-        # IMPORTANT fix decentralized access of blocking numbers: possible positions
-        sudoku_to_work_on[position[0]][position[1]][1].append(number)
+        SudokuHandler.add_possible_number(number, position[0], position[1], sudoku_to_work_on)
 
 def get_possible_numbers(line_index: int, column_index: int, sudoku_to_work_on: list) -> list:
     # IMPORTANT fix decentralized access of blocking numbers: possible positions

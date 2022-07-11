@@ -63,6 +63,15 @@ class SudokuHandler:
         return sudoku
 
     @staticmethod
+    def remove_numbers_from_possible_position(line_index: int, column_index: int, sudoku: list, numbers_to_remove=None) -> None:
+        if numbers_to_remove == None:
+            sudoku[line_index][column_index][1] = []
+        else:
+            possible_numbers = deepcopy(sudoku[line_index][column_index][1])
+            remaining_numbers: set = set(possible_numbers) - set(numbers_to_remove)
+            sudoku[line_index][column_index][1] = list(remaining_numbers)
+
+    @staticmethod
     def __get_field(line_index: int, column_index: int, sudoku_to_work_on: list):
         return deepcopy(sudoku_to_work_on[line_index][column_index])
     

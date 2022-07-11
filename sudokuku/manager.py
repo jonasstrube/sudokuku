@@ -35,7 +35,7 @@ def iterate_sudoku(sudoku: array) -> array:
                     line_to_write = possible_coordinates[0][0]
                     column_to_write = possible_coordinates[0][1]
                     SudokuHandler.set_number(number, line_to_write, column_to_write, sudoku)
-                    remove_numbers_from_possible_position(line_index=line_to_write, column_index=column_to_write, sudoku=sudoku)
+                    SudokuHandler.remove_numbers_from_possible_position(line_index=line_to_write, column_index=column_to_write, sudoku=sudoku)
                     erase_possible_positions_of_number(number, quadrant_index, sudoku)
                 elif len(possible_coordinates) > 1:
                     block_possible = coordinates_are_in_line(possible_coordinates)
@@ -47,7 +47,7 @@ def iterate_sudoku(sudoku: array) -> array:
                         fields_to_block = fields_and_numbers_to_block[1]
                         for field in fields_to_block:
                             numbers_not_anymore_possible_at_field = list(set(field[1]) - set(numbers_to_block))
-                            remove_numbers_from_possible_position(line_index=field[0][0], column_index=field[0][1], sudoku=sudoku, numbers_to_remove=numbers_not_anymore_possible_at_field)
+                            SudokuHandler.remove_numbers_from_possible_position(line_index=field[0][0], column_index=field[0][1], sudoku=sudoku, numbers_to_remove=numbers_not_anymore_possible_at_field)
                             SudokuHandler.set_field_state(field[0][0], field[0][1], FieldState.BLOCKED, sudoku)
                 else:
                     # Exception: there is no possible coordinate in the given quadrant for the number
@@ -65,7 +65,7 @@ def iterate_sudoku(sudoku: array) -> array:
                     line_to_write = possible_coordinates[0][0]
                     column_to_write = possible_coordinates[0][1]
                     SudokuHandler.set_number(number, line_to_write, column_to_write, sudoku)
-                    remove_numbers_from_possible_position(line_index=line_to_write, column_index=column_to_write, sudoku=sudoku)
+                    SudokuHandler.remove_numbers_from_possible_position(line_index=line_to_write, column_index=column_to_write, sudoku=sudoku)
                     quadrant_index = get_quadrant_index_of_position(line_to_write, column_to_write)
                     erase_possible_positions_of_number(number, quadrant_index, sudoku)
                 elif len(possible_coordinates) == 0:
@@ -84,7 +84,7 @@ def iterate_sudoku(sudoku: array) -> array:
                     line_to_write = possible_coordinates[0][0]
                     column_to_write = possible_coordinates[0][1]
                     SudokuHandler.set_number(number, line_to_write, column_to_write, sudoku)
-                    remove_numbers_from_possible_position(line_index=line_to_write, column_index=column_to_write, sudoku=sudoku)
+                    SudokuHandler.remove_numbers_from_possible_position(line_index=line_to_write, column_index=column_to_write, sudoku=sudoku)
                     quadrant_index = get_quadrant_index_of_position(line_to_write, column_to_write)
                     erase_possible_positions_of_number(number, quadrant_index, sudoku)
                 elif len(possible_coordinates) == 0:
@@ -203,16 +203,6 @@ def erase_possible_positions_of_number(number: int, quadrant_index: int, sudoku:
     
     for quadrant_coordinate in quadrant_coordinates_list:
         SudokuHandler.delete_possible_number(number, quadrant_coordinate[0], quadrant_coordinate[1], sudoku)
-
-def remove_numbers_from_possible_position(line_index: int, column_index: int, sudoku: array, numbers_to_remove=None) -> None:
-    if numbers_to_remove == None:
-        # IMPORTANT fix decentralized access of blocking numbers: possible positions
-        sudoku[line_index][column_index][1] = []
-    else:
-        # IMPORTANT fix decentralized access of blocking numbers: possible positions
-        possible_numbers = deepcopy(sudoku[line_index][column_index][1])
-        remaining_numbers: set = set(possible_numbers) - set(numbers_to_remove)
-        sudoku[line_index][column_index][1] = list(remaining_numbers)
 
 def set_possible_positions_of_number(number: int, possible_position_coordinates: array, sudoku_to_work_on: array) -> None:
     for position in possible_position_coordinates:

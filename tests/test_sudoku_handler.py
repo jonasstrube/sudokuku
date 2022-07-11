@@ -249,4 +249,4 @@ class TestSudokuHandler:
                 ]
         
         # TODO write
-        assert 0 == 1
+        assert 0 == 2

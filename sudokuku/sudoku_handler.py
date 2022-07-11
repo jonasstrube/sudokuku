@@ -11,7 +11,7 @@ class SudokuHandler:
         sudoku_to_work_on[line_index][column_index][0] = deepcopy(number)
 
     @staticmethod
-    def delete_possible_numbers_from_position(line_index: int, column_index: int, sudoku: list, numbers_to_remove=None) -> None:
+    def delete_possible_numbers(line_index: int, column_index: int, sudoku: list, numbers_to_remove=None) -> None:
         if numbers_to_remove == None:
             sudoku[line_index][column_index][1] = []
         else:

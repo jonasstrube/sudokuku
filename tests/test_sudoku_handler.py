@@ -40,16 +40,16 @@ class TestSudokuHandler:
 
         assert sudoku_input[4][1][1] == [3, 8]
 
-        SudokuHandler.delete_possible_numbers_from_position(4, 1, sudoku_input, 8)
+        SudokuHandler.delete_possible_numbers(4, 1, sudoku_input, 8)
         assert sudoku_input[4][1][1] == [3]
 
-        SudokuHandler.delete_possible_numbers_from_position(5, 1, sudoku_input, 8)
+        SudokuHandler.delete_possible_numbers(5, 1, sudoku_input, 8)
         assert sudoku_input[5][1][1] == []
 
-        SudokuHandler.delete_possible_numbers_from_position(6, 1, sudoku_input, 8)
+        SudokuHandler.delete_possible_numbers(6, 1, sudoku_input, 8)
         assert sudoku_input[5][1][1] == []
 
-    def test_delete_all_possible_numbers_from_position(self):
+    def test_delete_all_possible_numbers(self):
         sudoku_input = [
             [[3, [], 2], [None, [], 0], [None, [], 0], [8, [], 2], [None, [], 0], [None, [6], 0], [4, [], 2], [1, [], 2], [None, [], 0]],
             [[3, [], 2], [None, [], 0], [None, [], 0], [8, [], 2], [None, [], 0], [None, [6], 0], [4, [], 2], [1, [], 2], [None, [], 0]],
@@ -62,11 +62,11 @@ class TestSudokuHandler:
             [[3, [], 2], [None, [], 0], [None, [], 0], [8, [], 2], [None, [], 0], [None, [6], 0], [4, [], 2], [1, [], 2], [None, [], 0]],
         ]
 
-        SudokuHandler.delete_possible_numbers_from_position(line_index=3, column_index=1, sudoku=sudoku_input)
+        SudokuHandler.delete_possible_numbers(line_index=3, column_index=1, sudoku=sudoku_input)
 
         assert sudoku_input[3][1][1] == []
 
-    def test_delete_possible_numbers_from_position_with_empty_list(self):
+    def test_delete_possible_numbers_with_empty_list(self):
         sudoku_input = [
             [[3, [], 2], [None, [], 0], [None, [], 0], [8, [], 2], [None, [], 0], [None, [6], 0], [4, [], 2], [1, [], 2], [None, [], 0]],
             [[3, [], 2], [None, [], 0], [None, [], 0], [8, [], 2], [None, [], 0], [None, [6], 0], [4, [], 2], [1, [], 2], [None, [], 0]],
@@ -79,11 +79,11 @@ class TestSudokuHandler:
             [[3, [], 2], [None, [], 0], [None, [], 0], [8, [], 2], [None, [], 0], [None, [6], 0], [4, [], 2], [1, [], 2], [None, [], 0]],
         ]
 
-        SudokuHandler.delete_possible_numbers_from_position(line_index=3, column_index=1, sudoku=sudoku_input, numbers_to_remove=[])
+        SudokuHandler.delete_possible_numbers(line_index=3, column_index=1, sudoku=sudoku_input, numbers_to_remove=[])
 
         assert set(sudoku_input[3][1][1]) == set([3, 8])
 
-    def test_delete_1_possible_number_from_position(self):
+    def test_delete_1_possible_number_as_list(self):
         sudoku_input = [
             [[3, [], 2], [None, [], 0], [None, [], 0], [8, [], 2], [None, [], 0], [None, [6], 0], [4, [], 2], [1, [], 2], [None, [], 0]],
             [[3, [], 2], [None, [], 0], [None, [], 0], [8, [], 2], [None, [], 0], [None, [6], 0], [4, [], 2], [1, [], 2], [None, [], 0]],
@@ -96,6 +96,6 @@ class TestSudokuHandler:
             [[3, [], 2], [None, [], 0], [None, [], 0], [8, [], 2], [None, [], 0], [None, [6], 0], [4, [], 2], [1, [], 2], [None, [], 0]],
         ]
 
-        SudokuHandler.delete_possible_numbers_from_position(line_index=3, column_index=1, sudoku=sudoku_input, numbers_to_remove=[4])
+        SudokuHandler.delete_possible_numbers(line_index=3, column_index=1, sudoku=sudoku_input, numbers_to_remove=[4])
 
         assert set(sudoku_input[3][1][1]) == set([3, 8])

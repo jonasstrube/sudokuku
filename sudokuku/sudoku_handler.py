@@ -77,7 +77,3 @@ class SudokuHandler:
     @staticmethod
     def __get_field(line_index: int, column_index: int, sudoku_to_work_on: list):
         return deepcopy(sudoku_to_work_on[line_index][column_index])
-    
-    @staticmethod
-    def __get_possible_numbers(line_index: int, column_index: int, sudoku_to_work_on: list) -> list:
-        return deepcopy(sudoku_to_work_on[line_index][column_index][1])

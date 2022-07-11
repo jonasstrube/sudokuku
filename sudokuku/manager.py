@@ -8,6 +8,9 @@ from sudokuku.coordinate_calculator import CoordinateCalculator
 from sudokuku.sudoku_handler import SudokuHandler
 
 # TODO change use of data type array to list (e.g. sudoku and quadrant)
+# TODO rename position to field or coordinate, depending on content.
+# pure coordinate = ccordinate
+# list containing ccordinate, number and FieldState = field
 
 def solve_sudoku(sudoku: array) -> Sudokuwrapped:
     sudoku_input = deepcopy(sudoku)
